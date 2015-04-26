@@ -68,6 +68,8 @@ public class PaperViewerFragment extends Fragment {
             }
         });
 
+        updatePaperBleeding(0.0);
+
         return view;
     }
 

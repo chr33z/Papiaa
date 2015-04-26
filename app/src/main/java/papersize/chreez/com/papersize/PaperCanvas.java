@@ -1,5 +1,6 @@
 package papersize.chreez.com.papersize;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.Unit;
@@ -30,6 +32,8 @@ public class PaperCanvas extends View {
     private float sizeFactor;
     private int bleed;
 
+    private float animationFraction = 0.0f;
+
     private Rect paperRect = new Rect();
     private Rect shadowRect = new Rect();
     private Rect bleedRect = new Rect();
@@ -37,6 +41,8 @@ public class PaperCanvas extends View {
     private Paint paint = new Paint();
 
     private boolean landscapeMode = false;
+
+    private double currentBleed = 0.0;
 
     public PaperCanvas(Context context) {
         super(context);
@@ -65,6 +71,13 @@ public class PaperCanvas extends View {
     }
 
     public void setPaper(Paper paper) {
+        if(currentBleed == 0 && currentBleed < paper.getBleed()) {
+            animateBleedingTransition(false);
+        } else if(paper.getBleed() == 0 && currentBleed > 0) {
+            animateBleedingTransition(true);
+        }
+
+        currentBleed = paper.getBleed();
         this.paper = paper;
         invalidate();
     }
@@ -168,24 +181,24 @@ public class PaperCanvas extends View {
     }
 
     private void drawBleed(Canvas canvas) {
-        if(paper.getBleed() == 0) {
-            return;
-        }
+//        if(paper.getBleed() == 0) {
+//            return;
+//        }
 
         paint.setColor(Color.WHITE);
+        paint.setAlpha((int) (255 * animationFraction));
         paint.setStyle(Paint.Style.STROKE);
         paint.setPathEffect(new DashPathEffect(new float[] {10,20}, 0));
-
         canvas.drawRect(bleedRect, paint);
 
         paint.setStyle(Paint.Style.FILL);
-        paint.setAlpha(128);
-
+        paint.setAlpha((int) (128  * animationFraction));
         canvas.drawRect(bleedRect, paint);
 
         // Draw Dimensions
         Unit unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
         paint.setColor(Color.WHITE);
+        paint.setAlpha((int) (255 * animationFraction));
         paint.setPathEffect(null);
 
         // width of the paper
@@ -193,10 +206,10 @@ public class PaperCanvas extends View {
                 unit, paper.getWidth() + paper.getBleed() * 2) + " " + unit.getName();
 
         float x1 = (canvasWidth / 2.0f);
-        float y1 = (float) (padding + paperHeight + canvasHeight * 0.04);
+        float y1 = (float) (padding + paperHeight + canvasHeight * 0.04 * animationFraction);
 
         if(landscapeMode) {
-            y1 = (float) (padding - canvasHeight * 0.04);
+            y1 = (float) (padding - canvasHeight * 0.04 * animationFraction);
             canvas.save();
             canvas.rotate(180, x1, y1);
             canvas.drawText(widthText, x1, y1, paint);
@@ -209,7 +222,7 @@ public class PaperCanvas extends View {
         String heightText = Unit.fromMillimeter(
                 unit, paper.getHeight() + paper.getBleed() * 2) + " " + unit.getName();
 
-        float x2 = (float) (padding - canvasHeight * 0.04);
+        float x2 = (float) (padding - canvasHeight * 0.04 * animationFraction);
         float y2 = padding + (paperHeight / 2);
         canvas.save();
         canvas.rotate(90, x2, y2);
@@ -257,5 +270,26 @@ public class PaperCanvas extends View {
         canvas.rotate(90, x, y);
         canvas.drawText(heightText, x, y, paint);
         canvas.restore();
+    }
+
+    private void animateBleedingTransition(boolean reverse) {
+
+        ValueAnimator animator;
+        if(!reverse) {
+           animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        } else {
+            animator = ValueAnimator.ofFloat(1.0f, 0.0f);
+        }
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                animationFraction = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setDuration(1000);
+        animator.start();
     }
 }
