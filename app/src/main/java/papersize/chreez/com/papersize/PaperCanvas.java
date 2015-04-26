@@ -190,7 +190,7 @@ public class PaperCanvas extends View {
 
         // width of the paper
         String widthText = Unit.fromMillimeter(
-                unit, paper.getWidth() + paper.getBleed()) + " " + unit.getName();
+                unit, paper.getWidth() + paper.getBleed() * 2) + " " + unit.getName();
 
         float x1 = (canvasWidth / 2.0f);
         float y1 = (float) (padding + paperHeight + canvasHeight * 0.04);
@@ -207,7 +207,7 @@ public class PaperCanvas extends View {
 
         // height of the paper
         String heightText = Unit.fromMillimeter(
-                unit, paper.getHeight() + paper.getBleed()) + " " + unit.getName();
+                unit, paper.getHeight() + paper.getBleed() * 2) + " " + unit.getName();
 
         float x2 = (float) (padding - canvasHeight * 0.04);
         float y2 = padding + (paperHeight / 2);

@@ -8,10 +8,22 @@
 
     <TextView
         android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:textColor="@android:color/white"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+
+    <TextView
+        android:id="@+id/text_toogle_orientation"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:padding="8dp"
+        android:text="orientation"
         android:textSize="@dimen/abc_text_size_large_material"/>
 
     <papersize.chreez.com.papersize.PaperCanvas
@@ -21,38 +33,40 @@
         android:layout_below="@+id/header"
         android:layout_above="@+id/action_bar_container"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/action_bar_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        android:minHeight="?attr/actionBarSize"
-        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/text_increase_bleed"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="@string/icon_plus"
+            android:textSize="@dimen/abc_text_size_large_material"/>
+
+        <TextView
+            android:id="@+id/text_bleed"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="+bleed"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toRightOf="@+id/text_increase_bleed"
+            android:gravity="center"
+            android:text="@string/label_add_bleeding"
             android:textSize="@dimen/abc_text_size_large_material"/>
 
         <TextView
             android:id="@+id/text_decrease_bleed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="-bleed"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toRightOf="@+id/text_bleed"
+            android:gravity="center"
+            android:text="@string/icon_minus"
             android:textSize="@dimen/abc_text_size_large_material"/>
-
-        <TextView
-            android:id="@+id/text_toogle_orientation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="orientation"
-            android:textSize="@dimen/abc_text_size_large_material"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
