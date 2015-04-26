@@ -1,0 +1,33 @@
+{
+    "paper" :
+    {
+        "standards" :
+        [
+            {
+                "name" : "ISO 216",
+                "description" : "",
+                "series" :
+                [
+                    {
+                        "name" : "A",
+                        "description" : "",
+                        "formats" :
+                        [
+                            {"name" : "A0", "description" : "", "width" : 841, "height" : 1189},
+                            {"name" : "A1", "description" : "", "width" : 594, "height" : 841},
+                            {"name" : "A2", "description" : "", "width" : 420, "height" : 594},
+                            {"name" : "A3", "description" : "", "width" : 297, "height" : 420},
+                            {"name" : "A4", "description" : "", "width" : 210, "height" : 297},
+                            {"name" : "A5", "description" : "", "width" : 148, "height" : 210},
+                            {"name" : "A6", "description" : "", "width" : 105, "height" : 148},
+                            {"name" : "A7", "description" : "", "width" : 74, "height" : 105},
+                            {"name" : "A8", "description" : "", "width" : 52, "height" : 74},
+                            {"name" : "A9", "description" : "", "width" : 37, "height" : 52},
+                            {"name" : "A10", "description" : "", "width" : 26, "height" : 37}
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

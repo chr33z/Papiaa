@@ -1,0 +1,58 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@android:color/holo_blue_dark">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+
+    <papersize.chreez.com.papersize.PaperCanvas
+        android:id="@+id/canvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:layout_above="@+id/action_bar_container"/>
+
+    <LinearLayout
+        android:id="@+id/action_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:minHeight="?attr/actionBarSize"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_increase_bleed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="+bleed"
+            android:textSize="@dimen/abc_text_size_large_material"/>
+
+        <TextView
+            android:id="@+id/text_decrease_bleed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="-bleed"
+            android:textSize="@dimen/abc_text_size_large_material"/>
+
+        <TextView
+            android:id="@+id/text_toogle_orientation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="orientation"
+            android:textSize="@dimen/abc_text_size_large_material"/>
+    </LinearLayout>
+
+</RelativeLayout>
