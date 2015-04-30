@@ -4,28 +4,60 @@
         "standards" :
         [
             {
-                "name" : "ISO 216",
+                "name" : "ISO A",
                 "description" : "",
-                "series" :
+                "formats" :
                 [
-                    {
-                        "name" : "A",
-                        "description" : "",
-                        "formats" :
-                        [
-                            {"name" : "A0", "description" : "", "width" : 841, "height" : 1189},
-                            {"name" : "A1", "description" : "", "width" : 594, "height" : 841},
-                            {"name" : "A2", "description" : "", "width" : 420, "height" : 594},
-                            {"name" : "A3", "description" : "", "width" : 297, "height" : 420},
-                            {"name" : "A4", "description" : "", "width" : 210, "height" : 297},
-                            {"name" : "A5", "description" : "", "width" : 148, "height" : 210},
-                            {"name" : "A6", "description" : "", "width" : 105, "height" : 148},
-                            {"name" : "A7", "description" : "", "width" : 74, "height" : 105},
-                            {"name" : "A8", "description" : "", "width" : 52, "height" : 74},
-                            {"name" : "A9", "description" : "", "width" : 37, "height" : 52},
-                            {"name" : "A10", "description" : "", "width" : 26, "height" : 37}
-                        ]
-                    }
+                    {"name" : "4A0", "description" : "", "width" : 1682, "height" : 2378},
+                    {"name" : "2A0", "description" : "", "width" : 1189, "height" : 1682},
+                    {"name" : "A0", "description" : "", "width" : 841, "height" : 1189},
+                    {"name" : "A1", "description" : "", "width" : 594, "height" : 841},
+                    {"name" : "A2", "description" : "", "width" : 420, "height" : 594},
+                    {"name" : "A3", "description" : "", "width" : 297, "height" : 420},
+                    {"name" : "A4", "description" : "", "width" : 210, "height" : 297},
+                    {"name" : "A5", "description" : "", "width" : 148, "height" : 210},
+                    {"name" : "A6", "description" : "", "width" : 105, "height" : 148},
+                    {"name" : "A7", "description" : "", "width" : 74, "height" : 105},
+                    {"name" : "A8", "description" : "", "width" : 52, "height" : 74},
+                    {"name" : "A9", "description" : "", "width" : 37, "height" : 52},
+                    {"name" : "A10", "description" : "", "width" : 26, "height" : 37}
+                ]
+            },
+            {
+                "name" : "ISO B",
+                "description" : "",
+                "formats" :
+                [
+                    {"name" : "2B0", "description" : "", "width" : 1414, "height" : 2000},
+                    {"name" : "B0", "description" : "", "width" : 1000, "height" : 1414},
+                    {"name" : "B1", "description" : "", "width" : 707, "height" : 1000},
+                    {"name" : "B2", "description" : "", "width" : 500, "height" : 707},
+                    {"name" : "B3", "description" : "", "width" : 353, "height" : 500},
+                    {"name" : "B4", "description" : "", "width" : 250, "height" : 353},
+                    {"name" : "B5", "description" : "", "width" : 176, "height" : 250},
+                    {"name" : "B6", "description" : "", "width" : 125, "height" : 176},
+                    {"name" : "B7", "description" : "", "width" : 88, "height" : 125},
+                    {"name" : "B8", "description" : "", "width" : 62, "height" : 88},
+                    {"name" : "B9", "description" : "", "width" : 44, "height" : 62},
+                    {"name" : "B10", "description" : "", "width" : 31, "height" : 44}
+                ]
+            },
+            {
+                "name" : "ISO C",
+                "description" : "",
+                "formats" :
+                [
+                    {"name" : "C0", "description" : "", "width" : 917, "height" : 1297},
+                    {"name" : "C1", "description" : "", "width" : 648, "height" : 917},
+                    {"name" : "C2", "description" : "", "width" : 458, "height" : 648},
+                    {"name" : "C3", "description" : "", "width" : 324, "height" : 458},
+                    {"name" : "C4", "description" : "", "width" : 229, "height" : 324},
+                    {"name" : "C5", "description" : "", "width" : 162, "height" : 229},
+                    {"name" : "C6", "description" : "", "width" : 114, "height" : 162},
+                    {"name" : "C7", "description" : "", "width" : 81, "height" : 114},
+                    {"name" : "C8", "description" : "", "width" : 57, "height" : 81},
+                    {"name" : "C9", "description" : "", "width" : 40, "height" : 57},
+                    {"name" : "C10", "description" : "", "width" : 28, "height" : 40}
                 ]
             }
         ]

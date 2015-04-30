@@ -1,12 +1,13 @@
 package papersize.chreez.com.papersize;
 
-import android.support.v4.app.FragmentManager;
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
@@ -15,50 +16,40 @@ import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.PaperStandard;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends ActionBarActivity implements FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends ActionBarActivity {
 
-    MainFragment mMainFragment = new MainFragment_();
-
-    PaperViewerFragment mPaperViewerFragment = new PaperViewerFragment();
+    @ViewById(R.id.container)
+    FrameLayout mListView;
 
     List<PaperStandard> mStandards;
 
     @AfterViews
     void onContent() {
         mStandards = FormatLoader.readPaperFile(this);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        mMainFragment.setData(mStandards);
-        getSupportFragmentManager().addOnBackStackChangedListener(this);
-        getSupportFragmentManager().beginTransaction().add(
-                R.id.container, mMainFragment).commit();
+        openMainMenu();
     }
 
-    public void openPaperViewer(Paper paper) {
-        mPaperViewerFragment.setPaper(paper);
+    private void openMainMenu() {
+        MainMenuFragment fragment = new MainMenuFragment_();
+        fragment.setData(mStandards);
+        getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+    }
 
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container, mPaperViewerFragment);
+    public void openFormatsList(PaperStandard standard) {
+        PaperFormatsListFragment fragment = new PaperFormatsListFragment_();
+        fragment.setData(standard);
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+        ft.replace(R.id.container, fragment);
         ft.addToBackStack(null);
         ft.commit();
     }
 
-    @Override
-    public void onBackStackChanged() {
-        shouldDisplayHomeUp();
-    }
-
-    public void shouldDisplayHomeUp(){
-        boolean canback = getSupportFragmentManager().getBackStackEntryCount()>0;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        getSupportFragmentManager().popBackStack();
-        return true;
+    public void openPaperViewer(PaperStandard standard, Paper paper) {
+        String[] data = {standard.getName(), paper.getName()};
+        Intent paperViewerIntent = new Intent(this, PaperViewerActivity_.class);
+        paperViewerIntent.putExtra("format", data);
+        startActivity(paperViewerIntent);
     }
 }

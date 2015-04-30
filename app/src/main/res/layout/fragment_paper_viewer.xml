@@ -15,16 +15,14 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_large_material"/>
 
-    <TextView
-        android:id="@+id/text_toogle_orientation"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/icon_toogle_orientation"
+        android:layout_width="?attr/actionBarSize"
         android:layout_height="?attr/actionBarSize"
-        android:gravity="center"
+        android:padding="12dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:padding="8dp"
-        android:text="orientation"
-        android:textSize="@dimen/abc_text_size_large_material"/>
+        android:src="@drawable/icon_orientation_portrait"/>
 
     <papersize.chreez.com.papersize.PaperCanvas
         android:id="@+id/canvas"
@@ -42,30 +40,30 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/text_increase_bleed"
+            android:id="@+id/text_decrease_bleed"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentLeft="true"
             android:gravity="center"
-            android:text="@string/icon_plus"
+            android:text="@string/icon_minus"
             android:textSize="@dimen/abc_text_size_large_material"/>
 
         <TextView
             android:id="@+id/text_bleed"
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            android:layout_toRightOf="@+id/text_increase_bleed"
+            android:layout_toRightOf="@+id/text_decrease_bleed"
             android:gravity="center"
             android:text="@string/label_add_bleeding"
             android:textSize="@dimen/abc_text_size_large_material"/>
 
         <TextView
-            android:id="@+id/text_decrease_bleed"
+            android:id="@+id/text_increase_bleed"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:layout_toRightOf="@+id/text_bleed"
             android:gravity="center"
-            android:text="@string/icon_minus"
+            android:text="@string/icon_plus"
             android:textSize="@dimen/abc_text_size_large_material"/>
     </RelativeLayout>
 

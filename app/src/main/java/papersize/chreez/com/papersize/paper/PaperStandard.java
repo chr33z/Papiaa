@@ -12,15 +12,15 @@ public class PaperStandard {
 
     private String description = "";
 
-    private List<PaperSeries> serieses = new ArrayList<>();
+    private List<Paper> papers = new ArrayList<>();
 
     public PaperStandard(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public void addSeries(PaperSeries series) {
-        serieses.add(series);
+    public void addPaper(Paper paper) {
+        papers.add(paper);
     }
 
     public String getName() {
@@ -31,14 +31,14 @@ public class PaperStandard {
         return description != null ? description : "";
     }
 
-    public List<PaperSeries> getSeries() {
-        return serieses;
+    public List<Paper> getFormats() {
+        return papers;
     }
 
-    public PaperSeries getSeries(String id) {
-        for (PaperSeries series : serieses) {
-            if(series.getName().equals(id)) {
-                return series;
+    public Paper getFormat(String id) {
+        for (Paper paper : papers) {
+            if(paper.getName().equals(id)) {
+                return paper;
             }
         }
         return null;

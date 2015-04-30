@@ -9,9 +9,20 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.Toast;
 
+import papersize.chreez.com.papersize.paper.Orientation;
 import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.Unit;
 
@@ -24,7 +35,12 @@ public class PaperCanvas extends View {
 
     private int canvasWidth;
     private int canvasHeight;
+
     private int padding;
+    private int paddingTop;
+    private int paddingPortrait;
+    private int paddingLandscape;
+
     private int shadow;
     private int paperWidth;
     private int paperHeight;
@@ -40,9 +56,10 @@ public class PaperCanvas extends View {
 
     private Paint paint = new Paint();
 
-    private boolean landscapeMode = false;
-
     private double currentBleed = 0.0;
+
+    Typeface fontNormal;
+    Typeface fontBold;
 
     public PaperCanvas(Context context) {
         super(context);
@@ -63,41 +80,82 @@ public class PaperCanvas extends View {
     }
 
     private void initView() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Light.ttf");
-        paint.setTypeface(tf);
+        fontNormal = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Light.ttf");
+        fontBold = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Semibold.ttf");
+        paint.setTypeface(fontNormal);
         paint.setTextSize(paint.getTextSize() * 4.0f);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+
+        this.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                canvasWidth = getWidth();
+                canvasHeight = getHeight();
+
+                paddingPortrait = (int) (canvasWidth * 0.2);
+                paddingLandscape = (int) (canvasWidth * 0.085);
+
+                shadow = (int) (canvasWidth * 0.025);
+
+                if (paper != null) {
+                    if (paper.getOrientation() == Orientation.PORTRAIT) {
+                        paddingTop = paddingPortrait;
+                        padding = paddingPortrait;
+                    } else {
+                        paddingTop = paddingPortrait;
+                        padding = paddingLandscape;
+                    }
+
+                    paperWidth = canvasWidth - padding - padding;
+                    paperHeight = (int) (paperWidth * (paper.getHeight() / paper.getWidth()));
+
+                    sizeFactor = (float) (paperWidth / paper.getWidth());
+                    bleed = (int) (sizeFactor * paper.getBleed());
+                }
+
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     public void setPaper(Paper paper) {
-        if(currentBleed == 0 && currentBleed < paper.getBleed()) {
+        if (currentBleed == 0 && currentBleed < paper.getBleed()) {
             animateBleedingTransition(false);
-        } else if(paper.getBleed() == 0 && currentBleed > 0) {
+        } else if (paper.getBleed() == 0 && currentBleed > 0) {
             animateBleedingTransition(true);
         }
-
         currentBleed = paper.getBleed();
         this.paper = paper;
+
+        invalidate();
+    }
+
+    public void setBleeding(Unit unit, double bleeding) {
+        paper.setBleed(unit, bleeding);
+
+        if (currentBleed == 0 && currentBleed < paper.getBleed()) {
+            animateBleedingTransition(false);
+        } else if (paper.getBleed() == 0 && currentBleed > 0) {
+            animateBleedingTransition(true);
+        }
+        currentBleed = paper.getBleed();
+
         invalidate();
     }
 
     public void togglePaperOrientation() {
-        if(landscapeMode) {
-            setPortrait();
-        } else {
-            setLandscape();
-        }
-    }
+        double w1 = paper.getWidth();
+        double h1 = paper.getHeight();
+        paper.toggleOrientation();
+        double w2 = paper.getWidth();
+        double h2 = paper.getHeight();
 
-    public void setLandscape(){
-        landscapeMode = true;
-        invalidate();
-    }
+        double p1 = paper.getOrientation() == Orientation.PORTRAIT ? paddingLandscape : paddingPortrait;
+        double p2 = paper.getOrientation() == Orientation.PORTRAIT ? paddingPortrait : paddingLandscape;
 
-    public void setPortrait() {
-        landscapeMode = false;
-        invalidate();
+        animateOrientationTransition(w1, w2, h1, h2, p1, p2);
     }
 
     @Override
@@ -106,49 +164,48 @@ public class PaperCanvas extends View {
             return;
         }
 
-        canvasWidth = this.getWidth();
-        canvasHeight = this.getHeight();
-
-        sizeFactor = (float) (paperWidth / paper.getWidth());
+        paddingTop = (canvasHeight - paperHeight) / 2;
         bleed = (int) (sizeFactor * paper.getBleed());
-
-        padding = (int) (canvasWidth * 0.2);
-        shadow = (int) (canvasWidth * 0.025);
-
-        paperWidth = canvasWidth - padding - padding;
-        paperHeight = (int) (paperWidth * (paper.getHeight() / paper.getWidth()));
 
         paperRect.left = padding + bleed;
         paperRect.right = padding + paperWidth - bleed;
-        paperRect.top = padding + bleed;
-        paperRect.bottom = padding + paperHeight - bleed;
+        paperRect.top = paddingTop + bleed;
+        paperRect.bottom = paddingTop + paperHeight - bleed;
 
-        if(!landscapeMode) {
-            shadowRect.left = paperRect.left + shadow;
-            shadowRect.right = paperRect.right + shadow;
-            shadowRect.top = paperRect.top + shadow;
-            shadowRect.bottom = paperRect.bottom + shadow;
-        } else {
-            shadowRect.left = paperRect.left - shadow;
-            shadowRect.right = paperRect.right - shadow;
-            shadowRect.top = paperRect.top + shadow;
-            shadowRect.bottom = paperRect.bottom + shadow;
-        }
+        shadowRect.left = paperRect.left + shadow;
+        shadowRect.right = paperRect.right + shadow;
+        shadowRect.top = paperRect.top + shadow;
+        shadowRect.bottom = paperRect.bottom + shadow;
 
-        bleedRect.top = padding;
+        bleedRect.top = paddingTop;
         bleedRect.right = padding + paperWidth;
-        bleedRect.bottom = padding + paperHeight;
+        bleedRect.bottom = paddingTop + paperHeight;
         bleedRect.left = padding;
-
-        if(landscapeMode) {
-            canvas.rotate(-90, canvasWidth / 2, canvasHeight / 2);
-        }
 
         drawPaper(canvas);
         drawPrintMarkers(canvas);
         drawBleed(canvas);
+        drawPaperName(canvas);
 
         super.onDraw(canvas);
+    }
+
+    private void drawPaperName(Canvas canvas) {
+        // Draw paper name
+        float paintSize = paint.getTextSize();
+        paint.setTextSize(canvasWidth * 0.15f);
+        paint.setTypeface(fontBold);
+        paint.setColor(Color.GRAY);
+        paint.setAlpha(75);
+
+        float x3 = canvasWidth / 2;
+        float y3 = canvasHeight / 2 - ((paint.descent() + paint.ascent()) / 2);
+        canvas.drawText(paper.getName(), x3, y3, paint);
+
+        // restore paint
+        paint.setTextSize(paintSize);
+        paint.setTypeface(fontNormal);
+        paint.setAlpha(255);
     }
 
     private void drawPrintMarkers(Canvas canvas) {
@@ -158,9 +215,9 @@ public class PaperCanvas extends View {
 
         int strokePadding = (int) (canvasWidth * 0.01);
         int strokeLength = (int) (canvasWidth * 0.05);
-        int borderTop = padding;
+        int borderTop = paddingTop;
         int borderRight = padding + paperWidth;
-        int borderBottom = padding + paperHeight;
+        int borderBottom = paddingTop + paperHeight;
         int borderLeft = padding;
 
         // left upper corner
@@ -181,10 +238,6 @@ public class PaperCanvas extends View {
     }
 
     private void drawBleed(Canvas canvas) {
-//        if(paper.getBleed() == 0) {
-//            return;
-//        }
-
         paint.setColor(Color.WHITE);
         paint.setAlpha((int) (255 * animationFraction));
         paint.setStyle(Paint.Style.STROKE);
@@ -206,24 +259,15 @@ public class PaperCanvas extends View {
                 unit, paper.getWidth() + paper.getBleed() * 2) + " " + unit.getName();
 
         float x1 = (canvasWidth / 2.0f);
-        float y1 = (float) (padding + paperHeight + canvasHeight * 0.04 * animationFraction);
-
-        if(landscapeMode) {
-            y1 = (float) (padding - canvasHeight * 0.04 * animationFraction);
-            canvas.save();
-            canvas.rotate(180, x1, y1);
-            canvas.drawText(widthText, x1, y1, paint);
-            canvas.restore();
-        } else {
-            canvas.drawText(widthText, x1, y1, paint);
-        }
+        float y1 = (float) (paddingTop + paperHeight + canvasHeight * 0.04 * animationFraction);
+        canvas.drawText(widthText, x1, y1, paint);
 
         // height of the paper
         String heightText = Unit.fromMillimeter(
                 unit, paper.getHeight() + paper.getBleed() * 2) + " " + unit.getName();
 
         float x2 = (float) (padding - canvasHeight * 0.04 * animationFraction);
-        float y2 = padding + (paperHeight / 2);
+        float y2 = paddingTop + (paperHeight / 2);
         canvas.save();
         canvas.rotate(90, x2, y2);
         canvas.drawText(heightText, x2, y2, paint);
@@ -248,48 +292,72 @@ public class PaperCanvas extends View {
         paint.setColor(Color.GRAY);
 
         String widthText = Unit.fromMillimeter(unit, paper.getWidth()) + " " + unit.getName();
-
         float x1 = (canvasWidth / 2.0f);
-        float y1 = (float) (padding + paperHeight - bleed - canvasHeight * 0.02);
+        float y1 = (float) (paddingTop + paperHeight - bleed - canvasHeight * 0.02);
 
-        if(landscapeMode) {
-            y1 = (float) (padding + bleed + canvasHeight * 0.02);
-            canvas.save();
-            canvas.rotate(180, x1, y1);
-            canvas.drawText(widthText, x1, y1, paint);
-            canvas.restore();
-        } else {
-            canvas.drawText(widthText, x1, y1, paint);
-        }
+        canvas.drawText(widthText, x1, y1, paint);
 
         String heightText = Unit.fromMillimeter(unit, paper.getHeight()) + " " + unit.getName();
-        float x = (float) (padding + bleed + canvasHeight * 0.02);
-        float y = padding + (paperHeight / 2);
+        float x2 = (float) (padding + bleed + canvasHeight * 0.02);
+        float y2 = paddingTop + (paperHeight / 2);
 
         canvas.save();
-        canvas.rotate(90, x, y);
-        canvas.drawText(heightText, x, y, paint);
+        canvas.rotate(90, x2, y2);
+        canvas.drawText(heightText, x2, y2, paint);
         canvas.restore();
     }
 
-    private void animateBleedingTransition(boolean reverse) {
+    /**
+     * Adnimate paper properties from one orientation to another
+     * @param w1 width before
+     * @param w2 width after
+     * @param h1 height before
+     * @param h2 height after
+     * @param p1 padding before
+     * @param p2 padding after
+     */
+    private void animateOrientationTransition(
+            final double w1, final double w2,
+            final double h1, final double h2,
+            final double p1, final double p2) {
 
-        ValueAnimator animator;
+        ValueAnimator orientationAnimation = ValueAnimator.ofFloat(0.0f, 1.0f);
+        orientationAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float f = (float) animation.getAnimatedValue();
+
+                double height = h1 + (h2 - h1) * f;
+                double width = w1 + (w2 - w1) * f;
+                padding = (int) (p1 + (p2 - p1) * f);
+
+                paperWidth = canvasWidth - padding - padding;
+                paperHeight = (int) (paperWidth * (height / width));
+                postInvalidate();
+            }
+        });
+        orientationAnimation.setInterpolator(new OvershootInterpolator());
+        orientationAnimation.setDuration(500);
+        orientationAnimation.start();
+    }
+
+    private void animateBleedingTransition(boolean reverse) {
+        ValueAnimator bleedingAnimation;
         if(!reverse) {
-           animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+            bleedingAnimation = ValueAnimator.ofFloat(0.0f, 1.0f);
         } else {
-            animator = ValueAnimator.ofFloat(1.0f, 0.0f);
+            bleedingAnimation = ValueAnimator.ofFloat(1.0f, 0.0f);
         }
 
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        bleedingAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 animationFraction = (float) animation.getAnimatedValue();
                 invalidate();
             }
         });
-        animator.setInterpolator(new DecelerateInterpolator());
-        animator.setDuration(1000);
-        animator.start();
+        bleedingAnimation.setInterpolator(new DecelerateInterpolator());
+        bleedingAnimation.setDuration(1000);
+        bleedingAnimation.start();
     }
 }

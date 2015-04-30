@@ -1,0 +1,87 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="papersize.chreez.com.papersize.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_blue_grey_900">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/material_dark_blue_gray">
+
+        <ImageView
+            android:id="@+id/icon_toogle_orientation"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="@dimen/margin_xsmall"
+            android:layout_marginRight="@dimen/margin_xsmall"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:src="@drawable/icon_orientation_portrait"/>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/text_paper_size"
+        android:layout_above="@+id/action_bar_container"/>
+
+    <TextView
+        android:id="@+id/text_paper_size"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="paper size"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:background="@color/material_dark_blue_gray"/>
+
+    <RelativeLayout
+        android:id="@+id/action_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/text_bleed"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/label_add_bleeding"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/abc_text_size_large_material"/>
+
+        <TextView
+            android:id="@+id/text_decrease_bleed"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="@string/icon_minus"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/abc_text_size_large_material"/>
+
+        <TextView
+            android:id="@+id/text_increase_bleed"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="@string/icon_plus"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/abc_text_size_large_material"/>
+    </RelativeLayout>
+
+</RelativeLayout>
+

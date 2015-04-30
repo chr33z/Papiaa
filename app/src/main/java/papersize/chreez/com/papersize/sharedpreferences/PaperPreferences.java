@@ -11,4 +11,7 @@ public interface PaperPreferences {
 
     @DefaultInt(0)
     int unit();
+
+    @DefaultInt(0)
+    int lastSelectedFragment();
 }

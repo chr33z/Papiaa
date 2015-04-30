@@ -13,7 +13,6 @@ import java.util.List;
 
 import papersize.chreez.com.papersize.R;
 import papersize.chreez.com.papersize.paper.Paper;
-import papersize.chreez.com.papersize.paper.PaperSeries;
 import papersize.chreez.com.papersize.paper.PaperStandard;
 
 /**
@@ -51,28 +50,17 @@ public class FormatLoader {
                 String standardDescription = standardObj.getString("description");
                 PaperStandard paperStandard = new PaperStandard(standardName, standardDescription);
 
-                JSONArray seriesArray = standardObj.getJSONArray("series");
-                for (int j = 0; j < seriesArray.length(); j++) {
-                    JSONObject seriesObj =  seriesArray.getJSONObject(j);
+                JSONArray formatsArray = standardObj.getJSONArray("formats");
+                for (int k = 0; k < formatsArray.length(); k++) {
+                    JSONObject formatsObj =  formatsArray.getJSONObject(k);
 
-                    String seriesName = seriesObj.getString("name");
-                    String seriesDescription = seriesObj.getString("description");
-                    PaperSeries paperSeries = new PaperSeries(seriesName, seriesDescription);
+                    String formatName = formatsObj.getString("name");
+                    String formatDescription = formatsObj.getString("description");
+                    int width = formatsObj.getInt("width");
+                    int height = formatsObj.getInt("height");
 
-                    JSONArray formatsArray = seriesObj.getJSONArray("formats");
-                    for (int k = 0; k < formatsArray.length(); k++) {
-                        JSONObject formatsObj =  formatsArray.getJSONObject(k);
-
-                        String formatName = formatsObj.getString("name");
-                        String formatDescription = formatsObj.getString("description");
-                        int width = formatsObj.getInt("width");
-                        int height = formatsObj.getInt("height");
-
-                        Paper paper = new Paper(formatName, formatDescription, width, height);
-                        paperSeries.addFormat(paper);
-                    }
-
-                    paperStandard.addSeries(paperSeries);
+                    Paper paper = new Paper(formatName, formatDescription, width, height);
+                    paperStandard.addPaper(paper);
                 }
 
                 standards.add(paperStandard);

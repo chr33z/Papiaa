@@ -1,0 +1,26 @@
+package papersize.chreez.com.papersize.paper;
+
+import android.test.InstrumentationTestCase;
+
+/**
+ * Created by chris on 28.04.15.
+ */
+public class PaperTest extends InstrumentationTestCase {
+
+    private Paper paper;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        paper = new Paper("paper", "this is paper", 200, 400);
+    }
+
+    public void testPaperFunctionality() throws Exception {
+        assertEquals("paper", paper.getName());
+        assertEquals("this is paper", paper.getDescription());
+        assertEquals(200, paper.getWidth());
+        assertEquals(400, paper.getHeight());
+
+
+    }
+}

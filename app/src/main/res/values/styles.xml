@@ -4,10 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 
-        <!--<item name="colorPrimary">@color/my_awesome_color</item>-->
-
-        <!-- colorPrimaryDark is used for the status bar -->
-        <!--<item name="colorPrimaryDark">@color/my_awesome_darker_color</item>-->
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorPrimaryDark">@color/blue_dark_primary</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
