@@ -1,14 +1,12 @@
 package papersize.chreez.com.papersize;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +38,7 @@ import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.PaperStandard;
 import papersize.chreez.com.papersize.paper.Unit;
 import papersize.chreez.com.papersize.sharedpreferences.PaperPreferences_;
+import papersize.chreez.com.papersize.utils.Utils;
 
 @EActivity(R.layout.activity_paper_viewer)
 @OptionsMenu(R.menu.menu_paper_viewer)
@@ -134,12 +133,17 @@ public class PaperViewerActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_bottom);
     }
 
     @OptionsItem(R.id.action_share_paper)
@@ -147,12 +151,16 @@ public class PaperViewerActivity extends ActionBarActivity {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
         View view = fragment.getView();
 
-        Bitmap returnedBitmap = Bitmap.createBitmap(
-                view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-        Drawable bgDrawable = view.getBackground();
-        bgDrawable.draw(canvas);
-        view.draw(canvas);
+        if(view != null) {
+            Uri fileUri = Utils.saveViewToFile(this, view);
+
+            Intent shareImageIntent = new Intent(android.content.Intent.ACTION_SEND);
+            shareImageIntent.setType("image/png");
+            shareImageIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+
+            startActivity(Intent.createChooser(shareImageIntent, "Send your format using:"));
+
+        }
     }
 
     @Click(R.id.text_increase_bleed)
@@ -181,10 +189,10 @@ public class PaperViewerActivity extends ActionBarActivity {
 
             if(bleed <= 0) {
                 mDecreaseBleed.setEnabled(false);
-                mDecreaseBleed.animate().alpha(0.5f).start();
+                mDecreaseBleed.animate().alpha(0.2f).start();
             } else if(bleed >= MAX_BLEEDING) {
                 mIncreaseBleed.setEnabled(false);
-                mIncreaseBleed.animate().alpha(0.5f).start();
+                mIncreaseBleed.animate().alpha(0.2f).start();
             } else {
                 mIncreaseBleed.setEnabled(true);
                 mIncreaseBleed.animate().alpha(1f).start();
@@ -227,7 +235,8 @@ public class PaperViewerActivity extends ActionBarActivity {
         Paper paper = mPagerAdapter.getFragment(mPager.getCurrentItem()).getPaper();
         String width = doubleFormat.format(paper.getWidth() + paper.getBleed() * 2);
         String height = doubleFormat.format(paper.getHeight() + paper.getBleed() * 2);
-        mPaperSize.setText(String.format(Locale.getDefault(), getString(R.string.format_paper_size), width, height));
+        String unit = ((PaperApplication)getApplication()).getApplicationUnit().getName();
+        mPaperSize.setText(String.format(Locale.getDefault(), getString(R.string.format_paper_size), width, height, unit));
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="@color/material_dark_blue_gray">
+        android:background="@color/material_blue_grey_950">
 
         <ImageView
             android:id="@+id/icon_toogle_orientation"
@@ -40,8 +40,7 @@
         android:gravity="center"
         android:text="paper size"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/abc_text_size_large_material"
-        android:background="@color/material_dark_blue_gray"/>
+        android:textSize="@dimen/abc_text_size_large_material"/>
 
     <RelativeLayout
         android:id="@+id/action_bar_container"

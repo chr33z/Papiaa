@@ -11,7 +11,7 @@
     <string name="title_activity_series_fragment">SeriesFragment</string>
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
 
-    <string name="format_paper_size">Paper size: %1$s &#x00D7; %2$s</string>
+    <string name="format_paper_size">Paper size: %1$s &#x00D7; %2$s %3$s</string>
 
     <string name="icon_plus">&#xf067;</string>
     <string name="icon_minus">&#xf068;</string>

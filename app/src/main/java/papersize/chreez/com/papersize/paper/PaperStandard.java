@@ -43,4 +43,8 @@ public class PaperStandard {
         }
         return null;
     }
+
+    public boolean equals(PaperStandard o) {
+        return o != null ? o.name.equals(this.name) : false;
+    }
 }

@@ -14,7 +14,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
-import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.PaperStandard;
 
 /**
@@ -25,7 +24,7 @@ public class MainMenuFragment extends Fragment {
 
     private List<PaperStandard> data;
 
-    @ViewById(R.id.container)
+    @ViewById(R.id.container_left)
     LinearLayout mContainer;
 
     @AfterViews

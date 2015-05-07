@@ -15,8 +15,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.List;
-
 import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.PaperStandard;
 
@@ -46,6 +44,8 @@ public class PaperFormatsListFragment extends Fragment {
                     openPaperViewer(mStandard, paper);
                 }
             });
+
+            mList.setFadingEdgeLength(getResources().getDimensionPixelSize(R.dimen.margin_medium));
         }
     }
 
