@@ -25,18 +25,26 @@ public class Paper {
     private String name = "";
 
     /**
+     * A unique identifier for this format
+     */
+    private String id = "";
+
+    /**
      * A description of the paper. Can be empty
      */
     private String description = "";
+
+    private boolean favorite = true;
 
     /**
      * Orientation of the paper. Each paper is originally oriented portrait.
      */
     private Orientation orientation = Orientation.PORTRAIT;
 
-    public Paper(String name, String description, double width, double height) {
+    public Paper(String name, String description, String id, double width, double height) {
         this.name = name;
         this.description = description;
+        this.id = id;
         this.width = width;
         this.height = height;
     }
@@ -77,6 +85,18 @@ public class Paper {
 
     public Orientation getOrientation() {
         return orientation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public void toggleOrientation() {

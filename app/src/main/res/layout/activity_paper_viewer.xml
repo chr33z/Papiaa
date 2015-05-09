@@ -12,16 +12,6 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/material_blue_grey_950">
-
-        <ImageView
-            android:id="@+id/icon_toogle_orientation"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
-            android:padding="@dimen/margin_xsmall"
-            android:layout_marginRight="@dimen/margin_xsmall"
-            android:layout_gravity="right"
-            android:gravity="center"
-            android:src="@drawable/icon_orientation_portrait"/>
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.view.ViewPager

@@ -1,20 +1,20 @@
 package papersize.chreez.com.papersize;
 
-import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import papersize.chreez.com.papersize.adapter.PaperListAdapter;
+import papersize.chreez.com.papersize.data.FavoriteStore;
 import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.PaperStandard;
 
@@ -29,12 +29,12 @@ public class PaperFormatsListFragment extends Fragment {
     @ViewById(R.id.list)
     ListView mList;
 
-    private PaperFormatsAdapter mAdapter;
+    private PaperListAdapter mAdapter;
 
     @AfterViews
     void onContent() {
         if(mStandard != null) {
-            mAdapter = new PaperFormatsAdapter(getActivity(), mStandard);
+            mAdapter = new PaperListAdapter(getActivity(), mStandard.getFormats());
             mList.setAdapter(mAdapter);
 
             mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -49,6 +49,13 @@ public class PaperFormatsListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        updateFavorites();
+    }
+
     public void setData(PaperStandard data) {
         this.mStandard = data;
     }
@@ -57,46 +64,24 @@ public class PaperFormatsListFragment extends Fragment {
         ((MainActivity) getActivity()).openPaperViewer(standard, paper);
     }
 
-    private class PaperFormatsAdapter extends BaseAdapter {
-
-        PaperStandard data;
-
-        Context context;
-
-        Typeface openSansSemiBold;
-
-        public PaperFormatsAdapter(Context context, PaperStandard data) {
-            this.data = data;
-            this.context = context;
-
-            openSansSemiBold = Typeface.createFromAsset(context.getAssets(), "OpenSans-Semibold.ttf");
+    private void updateFavorites() {
+        if(mAdapter != null) {
+            mAdapter.setFavorites(getFavorites());
+            mAdapter.notifyDataSetChanged();
         }
+    };
 
-        @Override
-        public int getCount() {
-            return data.getFormats().size();
+    private List<String> getFavorites() {
+        List<String> favorites = new ArrayList<>();
+        FavoriteStore fs = new FavoriteStore(getActivity());
+        try {
+            fs.open();
+            favorites = fs.getFavorites();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            fs.close();
         }
-
-        @Override
-        public Paper getItem(int position) {
-            return data.getFormats().get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if(convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.list_group_item, parent, false);
-            }
-            TextView textView = (TextView) convertView.findViewById(R.id.text);
-            textView.setTypeface(openSansSemiBold);
-            textView.setText(getItem(position).getName());
-
-            return convertView;
-        }
+        return favorites;
     }
 }

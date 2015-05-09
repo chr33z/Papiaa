@@ -9,18 +9,10 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Toast;
 
 import papersize.chreez.com.papersize.paper.Orientation;
 import papersize.chreez.com.papersize.paper.Paper;
@@ -47,6 +39,9 @@ public class PaperCanvas extends View {
 
     private float sizeFactor;
     private int bleed;
+
+    private float favoriteIndicatorRadius;
+    private float facoriteIndicatorPadding;
 
     private float animationFraction = 0.0f;
 
@@ -96,6 +91,9 @@ public class PaperCanvas extends View {
 
                 paddingPortrait = (int) (canvasWidth * 0.2);
                 paddingLandscape = (int) (canvasWidth * 0.085);
+
+                favoriteIndicatorRadius = (float) (canvasHeight * 0.01);
+                facoriteIndicatorPadding = (float) (canvasWidth * 0.035);
 
                 shadow = (int) (canvasWidth * 0.025);
 
@@ -186,8 +184,24 @@ public class PaperCanvas extends View {
         drawPrintMarkers(canvas);
         drawBleed(canvas);
         drawPaperName(canvas);
+        drawFavoriteIndicator(canvas);
 
         super.onDraw(canvas);
+    }
+
+    private void drawFavoriteIndicator(Canvas canvas) {
+        if(paper.isFavorite()) {
+            int color = paint.getColor();
+            paint.setColor(getResources().getColor(R.color.favorite_indicator));
+
+            canvas.drawCircle(
+                    bleedRect.right - facoriteIndicatorPadding,
+                    bleedRect.top + facoriteIndicatorPadding,
+                    favoriteIndicatorRadius,
+                    paint);
+
+            paint.setColor(color);
+        }
     }
 
     private void drawPaperName(Canvas canvas) {

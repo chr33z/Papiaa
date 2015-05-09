@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,18 @@ import papersize.chreez.com.papersize.paper.PaperStandard;
 public class FormatLoader {
 
     public static List<PaperStandard> readPaperFile(Context context) {
+        // Get favorites from database
+        FavoriteStore fs = new FavoriteStore(context);
+        List<String> favorites = new ArrayList<>();
+        try {
+            fs.open();
+            favorites = fs.getFavorites();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            fs.close();
+        }
+
         List<PaperStandard> standards = new ArrayList<>();
 
         InputStream inputStream = context.getResources().openRawResource(R.raw.paper_formats);
@@ -55,11 +68,14 @@ public class FormatLoader {
                     JSONObject formatsObj =  formatsArray.getJSONObject(k);
 
                     String formatName = formatsObj.getString("name");
+                    String formatId = formatsObj.getString("id");
                     String formatDescription = formatsObj.getString("description");
                     int width = formatsObj.getInt("width");
                     int height = formatsObj.getInt("height");
 
-                    Paper paper = new Paper(formatName, formatDescription, width, height);
+                    Paper paper = new Paper(formatName, formatDescription, formatId, width, height);
+                    paper.setFavorite(isInFavorites(favorites, formatId));
+
                     paperStandard.addPaper(paper);
                 }
 
@@ -71,5 +87,14 @@ public class FormatLoader {
         }
 
         return standards;
+    }
+
+    private static boolean isInFavorites(List<String> favorites, String id) {
+        for (String favorite : favorites) {
+            if(favorite.equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

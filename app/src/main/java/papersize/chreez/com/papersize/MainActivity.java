@@ -3,6 +3,7 @@ package papersize.chreez.com.papersize;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
@@ -10,6 +11,8 @@ import android.widget.LinearLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -19,6 +22,7 @@ import papersize.chreez.com.papersize.paper.Paper;
 import papersize.chreez.com.papersize.paper.PaperStandard;
 
 @EActivity(R.layout.activity_main)
+@OptionsMenu(R.menu.menu_main)
 public class MainActivity extends ActionBarActivity {
 
     @ViewById(R.id.container_left)
@@ -26,6 +30,9 @@ public class MainActivity extends ActionBarActivity {
 
     @ViewById(R.id.container_right)
     FrameLayout mListFormat;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
 
     List<PaperStandard> mStandards;
 
@@ -35,6 +42,9 @@ public class MainActivity extends ActionBarActivity {
 
     @AfterViews
     void onContent() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("");
+
         mStandards = FormatLoader.readPaperFile(this);
         openMainMenu();
     }
@@ -67,7 +77,7 @@ public class MainActivity extends ActionBarActivity {
         Intent paperViewerIntent = new Intent(this, PaperViewerActivity_.class);
         paperViewerIntent.putExtra("format", data);
         startActivity(paperViewerIntent);
-        overridePendingTransition(R.anim.slide_in_bottom, R.anim.stay);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
     }
 
     @Override
@@ -117,5 +127,10 @@ public class MainActivity extends ActionBarActivity {
         public boolean willChangeBounds() {
             return true;
         }
+    }
+
+    @OptionsItem(R.id.action_about)
+    void onAbout() {
+        AboutActivity_.intent(this).start();
     }
 }

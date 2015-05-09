@@ -12,14 +12,14 @@ public class PaperTest extends InstrumentationTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        paper = new Paper("paper", "this is paper", 200, 400);
+        paper = new Paper("paper", "this is paper", "id", 200, 400);
     }
 
     public void testPaperFunctionality() throws Exception {
         assertEquals("paper", paper.getName());
         assertEquals("this is paper", paper.getDescription());
-        assertEquals(200, paper.getWidth());
-        assertEquals(400, paper.getHeight());
+        assertEquals(200.0, paper.getWidth());
+        assertEquals(400.0, paper.getHeight());
 
 
     }

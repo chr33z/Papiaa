@@ -48,25 +48,6 @@ public class MainMenuFragment extends Fragment {
                 mContainer.addView(view);
             }
         }
-
-        // TODO Add Favorites
-        View spacer = LayoutInflater.from(getActivity()).inflate(R.layout.list_space_item, (ViewGroup) getView(), false);
-        mContainer.addView(spacer);
-
-        View favoriteView = LayoutInflater.from(getActivity()).inflate(R.layout.list_group_item, (ViewGroup) getView(), false);
-        favoriteView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        TextView favoriteText = (TextView) favoriteView.findViewById(R.id.text);
-        favoriteText.setTypeface(font);
-        favoriteText.setTextColor(getActivity().getResources().getColor(R.color.material_deep_orange));
-        favoriteText.setText("Favorites");
-        mContainer.addView(favoriteView);
-
-        // TODO Add Own paper
     }
 
     public void setData(List<PaperStandard> data) {
@@ -75,9 +56,5 @@ public class MainMenuFragment extends Fragment {
 
     void openFormatsList(PaperStandard standard) {
         ((MainActivity) getActivity()).openFormatsList(standard);
-    }
-
-    void openFavoritesList() {
-
     }
 }

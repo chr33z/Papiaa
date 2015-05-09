@@ -2,7 +2,6 @@ package papersize.chreez.com.papersize;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +42,10 @@ public class PaperCanvasFragment extends Fragment {
         if(mCanvas != null) {
             mCanvas.setBleeding(unit, bleeding);
         }
+    }
+
+    public void invalidate() {
+        mCanvas.invalidate();
     }
 
     public void togglePaperOrientation() {

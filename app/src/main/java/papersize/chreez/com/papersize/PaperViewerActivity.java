@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,12 +27,14 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import papersize.chreez.com.papersize.data.FavoriteStore;
 import papersize.chreez.com.papersize.data.FormatLoader;
 import papersize.chreez.com.papersize.paper.Orientation;
 import papersize.chreez.com.papersize.paper.Paper;
@@ -66,6 +69,8 @@ public class PaperViewerActivity extends ActionBarActivity {
 
     @ViewById(R.id.icon_toogle_orientation)
     ImageView mToogleOrientation;
+
+    Menu mMenu;
 
     private float bleedingTouchX;
     private double currentBleeding;
@@ -131,11 +136,21 @@ public class PaperViewerActivity extends ActionBarActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
+        updateControls();
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.action_paper_orientation:
+                togglePaperOrientation();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -143,7 +158,7 @@ public class PaperViewerActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.stay, R.anim.slide_out_bottom);
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
     }
 
     @OptionsItem(R.id.action_share_paper)
@@ -160,6 +175,29 @@ public class PaperViewerActivity extends ActionBarActivity {
 
             startActivity(Intent.createChooser(shareImageIntent, "Send your format using:"));
 
+        }
+    }
+
+    @OptionsItem(R.id.action_favorites)
+    void onFavorite() {
+        PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
+        Paper paper = fragment.getPaper();
+
+        paper.setFavorite(!paper.isFavorite());
+        fragment.invalidate();
+
+        FavoriteStore fs = new FavoriteStore(this);
+        try {
+            fs.open();
+            if(paper.isFavorite()) {
+                fs.addFavorite(paper);
+            } else {
+                fs.deleteFavorite(paper);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            fs.close();
         }
     }
 
@@ -207,7 +245,6 @@ public class PaperViewerActivity extends ActionBarActivity {
         }
     }
 
-    @Click(R.id.icon_toogle_orientation)
     void togglePaperOrientation() {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
         fragment.togglePaperOrientation();
@@ -221,13 +258,22 @@ public class PaperViewerActivity extends ActionBarActivity {
         updatePaperBleeding(fragment.getPaper().getBleed());
         updateOrientationIcon(fragment.getPaper());
 
+        if(mMenu != null) {
+            if (fragment.getPaper().isFavorite()) {
+                mMenu.getItem(1).setTitle(R.string.action_remove_from_favorites);
+            } else {
+                mMenu.getItem(1).setTitle(R.string.action_add_to_favorites);
+            }
+        }
     }
 
     private void updateOrientationIcon(Paper paper) {
-        if (paper.getOrientation() == Orientation.PORTRAIT) {
-            mToogleOrientation.setImageResource(R.drawable.icon_orientation_portrait);
-        } else {
-            mToogleOrientation.setImageResource(R.drawable.icon_orientation_landscape);
+        if(mMenu != null) {
+            if (paper.getOrientation() == Orientation.PORTRAIT) {
+                mMenu.getItem(0).setIcon(R.drawable.icon_orientation_portrait);
+            } else {
+                mMenu.getItem(0).setIcon(R.drawable.icon_orientation_landscape);
+            }
         }
     }
 
