@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/material_blue_grey_900"
-    tools:context="papersize.chreez.com.papersize.MainActivity">
+    tools:context="com.elegantwalrus.papersize.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

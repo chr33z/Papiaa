@@ -6,7 +6,7 @@ android {
     buildToolsVersion "21.1.0"
 
     defaultConfig {
-        applicationId "papersize.chreez.com.papersize"
+        applicationId "com.elegantwalrus.papersize"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
