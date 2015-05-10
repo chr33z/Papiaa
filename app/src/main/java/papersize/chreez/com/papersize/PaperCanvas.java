@@ -8,7 +8,9 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -51,6 +53,9 @@ public class PaperCanvas extends View {
 
     private Paint paint = new Paint();
 
+    private float textSizeNumbers;
+    private float textSizePaperName;
+
     private double currentBleed = 0.0;
 
     Typeface fontNormal;
@@ -78,6 +83,8 @@ public class PaperCanvas extends View {
         fontNormal = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Light.ttf");
         fontBold = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Semibold.ttf");
         paint.setTypeface(fontNormal);
+        Log.d("TAG", "text size" + paint.getTextSize() * 4.0f);
+
         paint.setTextSize(paint.getTextSize() * 4.0f);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
@@ -88,6 +95,9 @@ public class PaperCanvas extends View {
             public void onGlobalLayout() {
                 canvasWidth = getWidth();
                 canvasHeight = getHeight();
+
+                textSizeNumbers = canvasWidth * 0.045f;
+                textSizePaperName = canvasWidth * 0.15f;
 
                 paddingPortrait = (int) (canvasWidth * 0.2);
                 paddingLandscape = (int) (canvasWidth * 0.085);
@@ -113,7 +123,9 @@ public class PaperCanvas extends View {
                     bleed = (int) (sizeFactor * paper.getBleed());
                 }
 
-                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
             }
         });
     }
@@ -207,7 +219,7 @@ public class PaperCanvas extends View {
     private void drawPaperName(Canvas canvas) {
         // Draw paper name
         float paintSize = paint.getTextSize();
-        paint.setTextSize(canvasWidth * 0.15f);
+        paint.setTextSize(textSizePaperName);
         paint.setTypeface(fontBold);
         paint.setColor(Color.GRAY);
         paint.setAlpha(75);
@@ -265,6 +277,7 @@ public class PaperCanvas extends View {
         // Draw Dimensions
         Unit unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
         paint.setColor(Color.WHITE);
+        paint.setTextSize(textSizeNumbers);
         paint.setAlpha((int) (255 * animationFraction));
         paint.setPathEffect(null);
 
@@ -304,6 +317,7 @@ public class PaperCanvas extends View {
         // Draw Dimensions
         Unit unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
         paint.setColor(Color.GRAY);
+        paint.setTextSize(textSizeNumbers);
 
         String widthText = Unit.fromMillimeter(unit, paper.getWidth()) + " " + unit.getName();
         float x1 = (canvasWidth / 2.0f);

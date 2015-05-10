@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Paper Size</string>
+    <string name="about_project_by">Ein Projekt von Christopher Gebhardt</string>
+    <string name="about_rate_app">Bewerte Paper Size</string>
+    <string name="about_recommend">Empfehle Paper Size weiter</string>
+    <string name="action_about" translatable="false">Information</string>
+    <string name="action_add_to_favorites">Zu Favoriten hinzufügen</string>
+    <string name="action_menu_item_standards">Standards</string>
+    <string name="action_paper_orientation">Ändere Ausrichtung</string>
+    <string name="action_remove_from_favorites">Aus Favoriten entfernen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_share_paper">Format teilen</string>
+    <string name="format_paper_size">Format: %1$s &#x00D7; %2$s %3$s</string>
+    <string name="menu_item_standards">Standards</string>
+    <string name="title_activity_about">Information</string>
+    <string name="title_activity_acknowledgments">Open Source Danksagung</string>
+    <string name="toast_favorite_addded">%1s zu Favoriten hinzu gefügt</string>
+    <string name="toast_favorite_removed">%1s aus Favoriten entfernt</string>
+    <string name="recommend_body">Hi,\n\nFalls du mal unbedingt die Größe eines Papierformats brauchst, öffne einfach "Paper Size" und sieh nach! Probier es einfach mal aus!\n\nHier ist der Link zum Play Store: %1s</string>
+    <string name="label_bleeding">Beschnitt</string>
+    <string name="label_add_bleeding">Beschnitt</string>
+    <string name="about_description">Ein interaktives Nachschlagewerk für internationale Papierformate aus dem ISO 216 Standard. Jedem Papier lässt sich intuitiv ein Beschnitt hinzufügen und die finale Größe kann sofort abgelesen werden.</string>
+    <string name="share_intent_chooser">Teile das Format mit:</string>
+    <string name="about_acknowledgements">Danksagungen</string>
+</resources>

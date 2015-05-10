@@ -12,6 +12,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.HashMap;
 import java.util.List;
 
 import papersize.chreez.com.papersize.paper.PaperStandard;
@@ -26,6 +27,10 @@ public class MainMenuFragment extends Fragment {
 
     @ViewById(R.id.container_left)
     LinearLayout mContainer;
+
+    private HashMap<String, TextView> mButtonMap = new HashMap<>();
+
+    private String activeStandard = "";
 
     @AfterViews
     void onContent() {
@@ -45,6 +50,7 @@ public class MainMenuFragment extends Fragment {
                 textView.setTypeface(font);
                 textView.setText(standard.getName());
 
+                mButtonMap.put(standard.getName(), textView);
                 mContainer.addView(view);
             }
         }
@@ -54,7 +60,32 @@ public class MainMenuFragment extends Fragment {
         this.data = data;
     }
 
+    public void resetButtons() {
+        activeStandard = "";
+
+        for (String key : mButtonMap.keySet()) {
+            mButtonMap.get(key).animate().alpha(1.0f).start();
+        }
+    }
+
     void openFormatsList(PaperStandard standard) {
+        // deactivate all buttons
+        for (String key : mButtonMap.keySet()) {
+            boolean isStandard = key.equals(standard.getName());
+            boolean isActive = activeStandard.equals(standard.getName());
+
+            if(isStandard && !isActive) {
+                mButtonMap.get(key).animate().alpha(1.0f).start();
+            } else if(!isStandard && isActive) {
+                mButtonMap.get(key).animate().alpha(0.5f).start();
+            } else if(isStandard && isActive) {
+                // skip
+            } else {
+                mButtonMap.get(key).animate().alpha(0.5f).start();
+            }
+        }
+
+        activeStandard = standard.getName();
         ((MainActivity) getActivity()).openFormatsList(standard);
     }
 }

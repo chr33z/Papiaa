@@ -38,6 +38,8 @@ public class MainActivity extends ActionBarActivity {
 
     PaperStandard mCurrentStandard;
 
+    MainMenuFragment mainMenuFragment;
+
     private boolean isExpanded = false;
 
     @AfterViews
@@ -50,9 +52,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void openMainMenu() {
-        MainMenuFragment fragment = new MainMenuFragment_();
-        fragment.setData(mStandards);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_left, fragment).commit();
+        mainMenuFragment = new MainMenuFragment_();
+        mainMenuFragment.setData(mStandards);
+        getSupportFragmentManager().beginTransaction().add(R.id.container_left, mainMenuFragment).commit();
     }
 
     public void openFormatsList(PaperStandard standard) {
@@ -84,6 +86,7 @@ public class MainActivity extends ActionBarActivity {
     public void onBackPressed() {
         if(mCurrentStandard != null) {
             collapseList();
+            mainMenuFragment.resetButtons();
             mCurrentStandard = null;
         } else {
             super.onBackPressed();

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -173,7 +174,7 @@ public class PaperViewerActivity extends ActionBarActivity {
             shareImageIntent.setType("image/png");
             shareImageIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
 
-            startActivity(Intent.createChooser(shareImageIntent, "Send your format using:"));
+            startActivity(Intent.createChooser(shareImageIntent, getString(R.string.share_intent_chooser)));
 
         }
     }
@@ -199,6 +200,13 @@ public class PaperViewerActivity extends ActionBarActivity {
         } finally {
             fs.close();
         }
+
+        if(paper.isFavorite()) {
+            String message = String.format(getString(R.string.toast_favorite_addded), paper.getName());
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+
+        updateControls();
     }
 
     @Click(R.id.text_increase_bleed)
@@ -261,8 +269,10 @@ public class PaperViewerActivity extends ActionBarActivity {
         if(mMenu != null) {
             if (fragment.getPaper().isFavorite()) {
                 mMenu.getItem(1).setTitle(R.string.action_remove_from_favorites);
+                mMenu.getItem(1).setIcon(getResources().getDrawable(R.drawable.icon_favorite));
             } else {
                 mMenu.getItem(1).setTitle(R.string.action_add_to_favorites);
+                mMenu.getItem(1).setIcon(getResources().getDrawable(R.drawable.icon_no_favorite));
             }
         }
     }

@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">PaperSize</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Paper Size</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+
+    <string name="share_intent_chooser">Share your format using:</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_about">About</string>
@@ -17,24 +19,22 @@
 
     <string name="format_paper_size">Paper size: %1$s &#x00D7; %2$s %3$s</string>
 
-    <string name="icon_plus">&#xf067;</string>
-    <string name="icon_minus">&#xf068;</string>
-    <string name="icon_circle">&#xf111;</string>
-    <string name="icon_share">&#xf1e0;</string>
-    <string name="icon_google_plus">&#xf0d4;</string>
-    <string name="icon_code">&#xf121;</string>
+    <string name="icon_plus" translatable="false">&#xf067;</string>
+    <string name="icon_minus" translatable="false">&#xf068;</string>
+    <string name="icon_circle" translatable="false">&#xf111;</string>
+    <string name="icon_share" translatable="false">&#xf1e0;</string>
+    <string name="icon_google_plus" translatable="false">&#xf0d4;</string>
+    <string name="icon_code" translatable="false">&#xf121;</string>
 
-    <string name="label_bleeding">Bleeding</string>
-    <string name="label_add_bleeding">Add Bleeding</string>
+    <string name="label_bleeding">Bleed</string>
+    <string name="label_add_bleeding">Add Bleed</string>
     <string name="title_activity_about">About</string>
 
     <!-- About -->
-    <string name="about_copyright">Paper Size &#x00A9; %1s</string>
+    <string name="about_copyright" translatable="false">Paper Size &#x00A9; %1s</string>
     <string name="about_project_by">A project by Christopher Gebhardt</string>
-    <string name="about_description">
-        An interactive dictionary for international paper formats covered by the ISO 216 Standard. Add bleeding to all formats in an intuitive way and get the final paper dimensions for your projects.
-    </string>
-    <string name="about_version">Version %1s</string>
+    <string name="about_description">An interactive dictionary for international paper formats covered by the ISO 216 Standard. Add bleed to all formats in an intuitive way and get the final paper dimensions for your projects.</string>
+    <string name="about_version" translatable="false">Version %1s</string>
     <string name="about_rate_app">Rate Paper Size</string>
     <string name="about_recommend">Recommend Paper Size</string>
     <string name="about_acknowledgements">Acknowledgements</string>
@@ -43,4 +43,8 @@
     <string name="recommend_subject">Try "Paper Size" to quickly get the paper formats you need!</string>
     <string name="recommend_body">Hi,\n\nif I need to know the size of a paper format I just open "Paper Size" and look it up! Just try it yourself!\n\n Here is a link to the play store: %1s</string>
     <string name="title_activity_acknowledgments">Open Source Acknowledgements</string>
+
+    <!-- Toasts -->
+    <string name="toast_favorite_addded">You added %1s to your favorites!</string>
+    <string name="toast_favorite_removed">You removed %1s from your favorites!</string>
 </resources>
