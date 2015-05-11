@@ -24,15 +24,9 @@ public class Utils {
      * Create a bitmap from a view
      *
      * @param view
-     * @param width
-     * @param height
      * @return
      */
-    private static Bitmap getBitmapFromView(Context context, View view, int width, int height) {
-        view.measure(View.MeasureSpec.makeMeasureSpec(
-                width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-
+    private static Bitmap getBitmapFromView(Context context, View view) {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.RGB_565);
 
         Canvas canvas = new Canvas(bitmap);
@@ -43,7 +37,7 @@ public class Utils {
     }
 
     public static Uri saveViewToFile(Context context, View view) {
-        Bitmap bitmap = getBitmapFromView(context, view, view.getWidth(), view.getHeight());
+        Bitmap bitmap = getBitmapFromView(context, view);
 
         if(bitmap == null) {
             return null;
