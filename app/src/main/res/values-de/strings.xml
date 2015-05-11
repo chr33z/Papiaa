@@ -4,7 +4,7 @@
     <string name="about_project_by">Ein Projekt von Christopher Gebhardt</string>
     <string name="about_rate_app">Bewerte Paper Size</string>
     <string name="about_recommend">Empfehle Paper Size weiter</string>
-    <string name="action_about" translatable="false">Information</string>
+    <string name="action_about">Information</string>
     <string name="action_add_to_favorites">Zu Favoriten hinzufügen</string>
     <string name="action_menu_item_standards">Standards</string>
     <string name="action_paper_orientation">Ändere Ausrichtung</string>

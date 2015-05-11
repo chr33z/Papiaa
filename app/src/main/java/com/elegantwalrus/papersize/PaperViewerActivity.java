@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,8 +47,6 @@ import java.util.Locale;
 @OptionsMenu(R.menu.menu_paper_viewer)
 public class PaperViewerActivity extends ActionBarActivity {
 
-    private static final int MAX_BLEEDING = 20;
-
     @Pref
     PaperPreferences_ mPrefs;
 
@@ -68,24 +65,24 @@ public class PaperViewerActivity extends ActionBarActivity {
     @ViewById(R.id.text_bleed)
     TextView mLabelBleeding;
 
-    @ViewById(R.id.icon_toogle_orientation)
-    ImageView mToogleOrientation;
-
-    Menu mMenu;
-
-    private float bleedingTouchX;
-    private double currentBleeding;
-
     @ViewById(R.id.pager)
     ViewPager mPager;
 
-    private ScreenSlidePagerAdapter mPagerAdapter;
+    private Menu mMenu;
 
-    private int screenWidth;
+    private ScreenSlidePagerAdapter mPagerAdapter;
 
     private PaperStandard mStandard;
 
-    DecimalFormat doubleFormat = new DecimalFormat("#.#");
+    private DecimalFormat doubleFormat = new DecimalFormat("#.#");
+
+    private double currentBleeding;
+
+    private float bleedingTouchX;
+
+    private int screenWidth;
+
+    private int maxBleeding = 10;
 
     @AfterViews
     void onContent() {
@@ -224,7 +221,7 @@ public class PaperViewerActivity extends ActionBarActivity {
     }
 
     private void updatePaperBleeding(double bleed) {
-        if(bleed >= 0 && bleed <= MAX_BLEEDING) {
+        if(bleed >= 0 && bleed <= maxBleeding) {
             if(bleed == 0) {
                 mLabelBleeding.setText(
                         getText(R.string.label_add_bleeding));
@@ -234,11 +231,15 @@ public class PaperViewerActivity extends ActionBarActivity {
             }
 
             if(bleed <= 0) {
+                mIncreaseBleed.setEnabled(true);
+                mIncreaseBleed.animate().alpha(1f).start();
                 mDecreaseBleed.setEnabled(false);
                 mDecreaseBleed.animate().alpha(0.2f).start();
-            } else if(bleed >= MAX_BLEEDING) {
+            } else if(bleed >= maxBleeding) {
                 mIncreaseBleed.setEnabled(false);
                 mIncreaseBleed.animate().alpha(0.2f).start();
+                mDecreaseBleed.setEnabled(true);
+                mDecreaseBleed.animate().alpha(1f).start();
             } else {
                 mIncreaseBleed.setEnabled(true);
                 mIncreaseBleed.animate().alpha(1f).start();
@@ -263,6 +264,8 @@ public class PaperViewerActivity extends ActionBarActivity {
 
     private void updateControls() {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
+        maxBleeding = fragment.getPaper().getMaxBleed();
+
         updatePaperBleeding(fragment.getPaper().getBleed());
         updateOrientationIcon(fragment.getPaper());
 
@@ -330,7 +333,7 @@ public class PaperViewerActivity extends ActionBarActivity {
                     float difference = x - bleedingTouchX;
 
                     int maxValue = screenWidth / 2;
-                    int stepSize = maxValue / MAX_BLEEDING;
+                    int stepSize = maxValue / maxBleeding;
 
                     updatePaperBleeding(currentBleeding + (int) (difference / stepSize));
                     return true;

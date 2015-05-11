@@ -13,9 +13,9 @@
 
     <string name="menu_item_standards">Standards</string>
     <string name="action_menu_item_standards">Standards</string>
-    <string name="title_activity_standards">StandardsActivity</string>
-    <string name="title_activity_series_fragment">SeriesFragment</string>
-    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="title_activity_standards" translatable="false">StandardsActivity</string>
+    <string name="title_activity_series_fragment" translatable="false">SeriesFragment</string>
+    <string name="title_activity_main_activity2" translatable="false">MainActivity2Activity</string>
 
     <string name="format_paper_size">Paper size: %1$s &#x00D7; %2$s %3$s</string>
 
@@ -40,7 +40,7 @@
     <string name="about_acknowledgements">Acknowledgements</string>
 
     <!-- Recommend -->
-    <string name="recommend_subject">Try "Paper Size" to quickly get the paper formats you need!</string>
+    <string name="recommend_subject" translatable="false">Try "Paper Size" to quickly get the paper formats you need!</string>
     <string name="recommend_body">Hi,\n\nif I need to know the size of a paper format I just open "Paper Size" and look it up! Just try it yourself!\n\n Here is a link to the play store: %1s</string>
     <string name="title_activity_acknowledgments">Open Source Acknowledgements</string>
 

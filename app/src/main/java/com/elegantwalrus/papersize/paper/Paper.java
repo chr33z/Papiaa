@@ -5,6 +5,8 @@ package com.elegantwalrus.papersize.paper;
  */
 public class Paper {
 
+    private static final int MAX_BLEEDING = 30;
+
     /**
      * Width in mm
      */
@@ -101,5 +103,18 @@ public class Paper {
 
     public void toggleOrientation() {
         orientation = orientation == Orientation.PORTRAIT ? Orientation.LANDSCAPE : Orientation.PORTRAIT;
+    }
+
+    /**
+     * Get the maximum bleed for this paper. This is determined by its smallest size and
+     * follows a quadratic equation
+     * @return
+     */
+    public int getMaxBleed() {
+        final double A = -0.0000167;
+        final double B = 0.0442;
+        final double C = 2.86;
+
+        return  Math.min((int)(Math.ceil(A * width * width + B * width + C)), MAX_BLEEDING);
     }
 }
