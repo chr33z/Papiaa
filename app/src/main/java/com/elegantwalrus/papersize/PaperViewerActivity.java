@@ -36,7 +36,6 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -185,18 +184,13 @@ public class PaperViewerActivity extends ActionBarActivity {
         fragment.invalidate();
 
         FavoriteStore fs = new FavoriteStore(this);
-        try {
-            fs.open();
-            if(paper.isFavorite()) {
-                fs.addFavorite(paper);
-            } else {
-                fs.deleteFavorite(paper);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            fs.close();
+        fs.open();
+        if(paper.isFavorite()) {
+            fs.addFavorite(paper);
+        } else {
+            fs.deleteFavorite(paper);
         }
+        fs.close();
 
         if(paper.isFavorite()) {
             String message = String.format(getString(R.string.toast_favorite_added), paper.getName());

@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +24,9 @@ public class FormatLoader {
         // Get favorites from database
         FavoriteStore fs = new FavoriteStore(context);
         List<String> favorites = new ArrayList<>();
-        try {
-            fs.open();
-            favorites = fs.getFavorites();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            fs.close();
-        }
+        fs.open();
+        favorites = fs.getFavorites();
+        fs.close();
 
         List<PaperStandard> standards = new ArrayList<>();
 

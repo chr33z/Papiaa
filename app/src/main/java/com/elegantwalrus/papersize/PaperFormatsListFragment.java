@@ -14,7 +14,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,14 +73,9 @@ public class PaperFormatsListFragment extends Fragment {
     private List<String> getFavorites() {
         List<String> favorites = new ArrayList<>();
         FavoriteStore fs = new FavoriteStore(getActivity());
-        try {
-            fs.open();
-            favorites = fs.getFavorites();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            fs.close();
-        }
+        fs.open();
+        favorites = fs.getFavorites();
+        fs.close();
         return favorites;
     }
 }
