@@ -20,6 +20,8 @@ import com.elegantwalrus.papersize.paper.Orientation;
 import com.elegantwalrus.papersize.paper.Paper;
 import com.elegantwalrus.papersize.paper.Unit;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by Christopher Gebhardt on 24.04.15.
  */
@@ -58,8 +60,12 @@ public class PaperCanvas extends View {
 
     private double currentBleed = 0.0;
 
-    Typeface fontNormal;
-    Typeface fontBold;
+    private Typeface fontNormal;
+    private Typeface fontBold;
+
+    private Unit unit = Unit.MILLIMETER;
+
+    private DecimalFormat doubleFormat = new DecimalFormat("#.##");
 
     public PaperCanvas(Context context) {
         super(context);
@@ -123,7 +129,7 @@ public class PaperCanvas extends View {
                     bleed = (int) (sizeFactor * paper.getBleed());
                 }
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
             }
@@ -139,6 +145,7 @@ public class PaperCanvas extends View {
         currentBleed = paper.getBleed();
         this.paper = paper;
 
+        unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
         invalidate();
     }
 
@@ -275,23 +282,22 @@ public class PaperCanvas extends View {
         canvas.drawRect(bleedRect, paint);
 
         // Draw Dimensions
-        Unit unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
         paint.setColor(Color.WHITE);
         paint.setTextSize(textSizeNumbers);
         paint.setAlpha((int) (255 * animationFraction));
         paint.setPathEffect(null);
 
         // width of the paper
-        String widthText = Unit.fromMillimeter(
-                unit, paper.getWidth() + paper.getBleed() * 2) + " " + unit.getName();
+        String widthText = doubleFormat.format(Unit.fromMillimeter(
+                unit, paper.getWidth() + paper.getBleed() * 2)) + " " + unit.getName();
 
         float x1 = (canvasWidth / 2.0f);
         float y1 = (float) (paddingTop + paperHeight + canvasHeight * 0.04 * animationFraction);
         canvas.drawText(widthText, x1, y1, paint);
 
         // height of the paper
-        String heightText = Unit.fromMillimeter(
-                unit, paper.getHeight() + paper.getBleed() * 2) + " " + unit.getName();
+        String heightText = doubleFormat.format(Unit.fromMillimeter(
+                unit, paper.getHeight() + paper.getBleed() * 2)) + " " + unit.getName();
 
         float x2 = (float) (padding - canvasHeight * 0.04 * animationFraction);
         float y2 = paddingTop + (paperHeight / 2);
@@ -315,17 +321,18 @@ public class PaperCanvas extends View {
         canvas.drawRect(paperRect, paint);
 
         // Draw Dimensions
-        Unit unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
         paint.setColor(Color.GRAY);
         paint.setTextSize(textSizeNumbers);
 
-        String widthText = Unit.fromMillimeter(unit, paper.getWidth()) + " " + unit.getName();
+        String widthText = doubleFormat.format(
+                Unit.fromMillimeter(unit, paper.getWidth())) + " " + unit.getName();
         float x1 = (canvasWidth / 2.0f);
         float y1 = (float) (paddingTop + paperHeight - bleed - canvasHeight * 0.02);
 
         canvas.drawText(widthText, x1, y1, paint);
 
-        String heightText = Unit.fromMillimeter(unit, paper.getHeight()) + " " + unit.getName();
+        String heightText = doubleFormat.format(
+                Unit.fromMillimeter(unit, paper.getHeight())) + " " + unit.getName();
         float x2 = (float) (padding + bleed + canvasHeight * 0.02);
         float y2 = paddingTop + (paperHeight / 2);
 

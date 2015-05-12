@@ -12,8 +12,25 @@
         <!--<item name="colorAccent">@color/accent</item>-->
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar" />
 
+    <style name="AppTheme.Settings" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarStyle">@style/PaperActionbar</item>
+        <item name="android:textAppearanceMedium">@style/ListTextAppearanceMedium</item>
+        <item name="android:textColorSecondary">@color/gray_light</item>
+    </style>
+
+    <style name="PaperActionbar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/material_blue_grey_950</item>
+        <item name="background">@color/material_blue_grey_950</item>
+    </style>
+
+    <style name="ActionbarTitleText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ListTextAppearanceMedium" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Paper Size</string>
-    <string name="hello_world" translatable="false">Hello world!</string>
 
     <string name="share_intent_chooser">Share your format using:</string>
 
@@ -26,7 +25,7 @@
     <string name="icon_google_plus" translatable="false">&#xf0d4;</string>
     <string name="icon_code" translatable="false">&#xf121;</string>
 
-    <string name="label_bleeding">Bleed</string>
+    <string name="label_bleeding">Bleed %1$s %2$s</string>
     <string name="label_add_bleeding">Add Bleed</string>
     <string name="title_activity_about">About</string>
 
@@ -45,6 +44,14 @@
     <string name="title_activity_acknowledgments">Open Source Acknowledgements</string>
 
     <!-- Toasts -->
-    <string name="toast_favorite_addded">You added %1s to your favorites!</string>
+    <string name="toast_favorite_added">You added %1s to your favorites!</string>
     <string name="toast_favorite_removed">You removed %1s from your favorites!</string>
+    <string name="title_activity_paper_settings">Settings</string>
+    <string name="pref_default_unit">Paper Size Unit</string>
+
+    <!-- Units -->
+    <string name="unit_millimeter">Millimeter</string>
+    <string name="unit_centimeter">Centimeter</string>
+    <string name="unit_inch">Inch</string>
+
 </resources>

@@ -74,7 +74,7 @@ public class PaperViewerActivity extends ActionBarActivity {
 
     private PaperStandard mStandard;
 
-    private DecimalFormat doubleFormat = new DecimalFormat("#.#");
+    private DecimalFormat doubleFormat = new DecimalFormat("#.##");
 
     private double currentBleeding;
 
@@ -199,7 +199,7 @@ public class PaperViewerActivity extends ActionBarActivity {
         }
 
         if(paper.isFavorite()) {
-            String message = String.format(getString(R.string.toast_favorite_addded), paper.getName());
+            String message = String.format(getString(R.string.toast_favorite_added), paper.getName());
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
 
@@ -218,40 +218,6 @@ public class PaperViewerActivity extends ActionBarActivity {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
         double bleed = fragment.getPaper().getBleed();
         updatePaperBleeding(bleed - 1);
-    }
-
-    private void updatePaperBleeding(double bleed) {
-        if(bleed >= 0 && bleed <= maxBleeding) {
-            if(bleed == 0) {
-                mLabelBleeding.setText(
-                        getText(R.string.label_add_bleeding));
-            } else {
-                mLabelBleeding.setText(
-                        getText(R.string.label_bleeding) + " " + bleed + " " + Unit.MILLIMETER.getName());
-            }
-
-            if(bleed <= 0) {
-                mIncreaseBleed.setEnabled(true);
-                mIncreaseBleed.animate().alpha(1f).start();
-                mDecreaseBleed.setEnabled(false);
-                mDecreaseBleed.animate().alpha(0.2f).start();
-            } else if(bleed >= maxBleeding) {
-                mIncreaseBleed.setEnabled(false);
-                mIncreaseBleed.animate().alpha(0.2f).start();
-                mDecreaseBleed.setEnabled(true);
-                mDecreaseBleed.animate().alpha(1f).start();
-            } else {
-                mIncreaseBleed.setEnabled(true);
-                mIncreaseBleed.animate().alpha(1f).start();
-                mDecreaseBleed.setEnabled(true);
-                mDecreaseBleed.animate().alpha(1f).start();
-            }
-
-            PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
-            fragment.setBleeding(Unit.MILLIMETER, bleed);
-
-            updatePaperSize();
-        }
     }
 
     void togglePaperOrientation() {
@@ -280,6 +246,45 @@ public class PaperViewerActivity extends ActionBarActivity {
         }
     }
 
+    private void updatePaperBleeding(double bleed) {
+        if(bleed >= 0 && bleed <= maxBleeding) {
+            Unit unit = ((PaperApplication)getApplication()).getApplicationUnit();
+
+            if(bleed == 0) {
+                mLabelBleeding.setText(
+                        getText(R.string.label_add_bleeding));
+            } else {
+                String bleedInUnit = doubleFormat.format(Unit.fromMillimeter(unit, bleed));
+                String formatText = getString(R.string.label_bleeding);
+                String text = String.format(Locale.getDefault(), formatText, bleedInUnit, unit.getName());
+
+                mLabelBleeding.setText(text);
+            }
+
+            if(bleed <= 0) {
+                mIncreaseBleed.setEnabled(true);
+                mIncreaseBleed.animate().alpha(1f).start();
+                mDecreaseBleed.setEnabled(false);
+                mDecreaseBleed.animate().alpha(0.2f).start();
+            } else if(bleed >= maxBleeding) {
+                mIncreaseBleed.setEnabled(false);
+                mIncreaseBleed.animate().alpha(0.2f).start();
+                mDecreaseBleed.setEnabled(true);
+                mDecreaseBleed.animate().alpha(1f).start();
+            } else {
+                mIncreaseBleed.setEnabled(true);
+                mIncreaseBleed.animate().alpha(1f).start();
+                mDecreaseBleed.setEnabled(true);
+                mDecreaseBleed.animate().alpha(1f).start();
+            }
+
+            PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
+            fragment.setBleeding(Unit.MILLIMETER, bleed);
+
+            updatePaperSize();
+        }
+    }
+
     private void updateOrientationIcon(Paper paper) {
         if(mMenu != null) {
             if (paper.getOrientation() == Orientation.PORTRAIT) {
@@ -292,10 +297,14 @@ public class PaperViewerActivity extends ActionBarActivity {
 
     private void updatePaperSize() {
         Paper paper = mPagerAdapter.getFragment(mPager.getCurrentItem()).getPaper();
-        String width = doubleFormat.format(paper.getWidth() + paper.getBleed() * 2);
-        String height = doubleFormat.format(paper.getHeight() + paper.getBleed() * 2);
-        String unit = ((PaperApplication)getApplication()).getApplicationUnit().getName();
-        mPaperSize.setText(String.format(Locale.getDefault(), getString(R.string.format_paper_size), width, height, unit));
+        Unit unit = ((PaperApplication)getApplication()).getApplicationUnit();
+        double width = paper.getWidth() + paper.getBleed() * 2;
+        double height = paper.getHeight() + paper.getBleed() * 2;
+
+        String widthInUnit = doubleFormat.format(Unit.fromMillimeter(unit, width));
+        String heightInUnit = doubleFormat.format(Unit.fromMillimeter(unit, height));
+        mPaperSize.setText(String.format(
+                Locale.getDefault(), getString(R.string.format_paper_size), widthInUnit, heightInUnit, unit.getName()));
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {

@@ -136,4 +136,9 @@ public class MainActivity extends ActionBarActivity {
     void onAbout() {
         AboutActivity_.intent(this).start();
     }
+
+    @OptionsItem(R.id.action_settings)
+    void onSettings() {
+        PaperSettingsActivity_.intent(this).start();
+    }
 }

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elegantwalrus.papersize"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <application
         android:name=".PaperApplication_"
@@ -42,10 +42,21 @@
             android:label="@string/title_activity_acknowledgments"
             android:parentActivityName=".AboutActivity_"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.elegantwalrus.papersize.AboutActivity_" />
+        </activity>
+        <activity
+            android:name=".PaperSettingsActivity_"
+            android:label="@string/title_activity_paper_settings"
+            android:parentActivityName=".MainActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elegantwalrus.papersize.AboutActivity_" />
+
         </activity>
     </application>
 
