@@ -18,13 +18,13 @@ import java.util.List;
 
 public class PaperListAdapter extends BaseAdapter {
 
-        List<Paper> data = new ArrayList<>();
+        private List<Paper> data = new ArrayList<>();
 
-        List<Paper> sortedData = new ArrayList<>();
+        private List<Paper> sortedData = new ArrayList<>();
 
-        Context context;
+        private Context context;
 
-        Typeface openSansSemiBold;
+        private Typeface openSansSemiBold;
 
         public PaperListAdapter(Context context, List<Paper> data) {
             this.data = data;
@@ -54,7 +54,6 @@ public class PaperListAdapter extends BaseAdapter {
                 }
             }
 
-            List<Paper> newData = favoritePapers;
             favoritePapers.addAll(sortedData);
             sortedData = favoritePapers;
         }

@@ -13,7 +13,7 @@ public enum Unit {
     INCH("in"),
     FEET("ft");
 
-    private String name;
+    private final String name;
 
     Unit(String name) {
         this.name = name;

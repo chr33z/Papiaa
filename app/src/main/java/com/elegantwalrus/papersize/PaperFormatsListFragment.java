@@ -69,7 +69,7 @@ public class PaperFormatsListFragment extends Fragment {
             mAdapter.setFavorites(getFavorites());
             mAdapter.notifyDataSetChanged();
         }
-    };
+    }
 
     private List<String> getFavorites() {
         List<String> favorites = new ArrayList<>();

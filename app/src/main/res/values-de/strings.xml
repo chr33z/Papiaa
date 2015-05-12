@@ -6,13 +6,11 @@
     <string name="about_recommend">Empfehle Paper Size weiter</string>
     <string name="action_about">Information</string>
     <string name="action_add_to_favorites">Zu Favoriten hinzufügen</string>
-    <string name="action_menu_item_standards">Standards</string>
     <string name="action_paper_orientation">Ändere Ausrichtung</string>
     <string name="action_remove_from_favorites">Aus Favoriten entfernen</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_share_paper">Format teilen</string>
     <string name="format_paper_size">Format: %1$s &#x00D7; %2$s %3$s</string>
-    <string name="menu_item_standards">Standards</string>
     <string name="title_activity_about">Information</string>
     <string name="title_activity_acknowledgments">Open Source Danksagung</string>
     <string name="toast_favorite_added">%1s zu Favoriten hinzu gefügt</string>

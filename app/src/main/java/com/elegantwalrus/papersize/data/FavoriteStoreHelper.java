@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by chris on 09.05.15.
  */
-public class FavoriteStoreHelper extends SQLiteOpenHelper {
+class FavoriteStoreHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_FAVORITE = "favorites";
     public static final String COLUMN_ID = "_id";

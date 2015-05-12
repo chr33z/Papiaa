@@ -17,8 +17,8 @@ public class FavoriteStoreTest extends AndroidTestCase {
     private Paper paper1;
     private Paper paper2;
 
-    private String id_paper_1 = "id1";
-    private String id_paper_2 = "id2";
+    private final String id_paper_1 = "id1";
+    private final String id_paper_2 = "id2";
 
     @Override
     protected void setUp() throws Exception {

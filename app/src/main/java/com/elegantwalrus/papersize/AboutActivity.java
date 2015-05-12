@@ -49,7 +49,7 @@ public class AboutActivity extends ActionBarActivity {
         mAcknowledgmentsIcon.setTypeface(awesome);
 
         // Set version name
-        PackageInfo pInfo = null;
+        PackageInfo pInfo;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = pInfo.versionName;

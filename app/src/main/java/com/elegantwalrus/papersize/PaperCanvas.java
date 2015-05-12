@@ -65,7 +65,7 @@ public class PaperCanvas extends View {
 
     private Unit unit = Unit.MILLIMETER;
 
-    private DecimalFormat doubleFormat = new DecimalFormat("#.##");
+    private final DecimalFormat doubleFormat = new DecimalFormat("#.##");
 
     public PaperCanvas(Context context) {
         super(context);

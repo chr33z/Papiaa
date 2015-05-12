@@ -9,8 +9,6 @@
     <dimen name="margin_medium">24dp</dimen>
     <dimen name="margin_large">32dp</dimen>
 
-    <dimen name="button_bleeding_width">112dp</dimen>
-
     <dimen name="list_group_text_height">56dp</dimen>
     <dimen name="list_group_text_margin">16dp</dimen>
     <dimen name="list_child_text_margin">32dp</dimen>

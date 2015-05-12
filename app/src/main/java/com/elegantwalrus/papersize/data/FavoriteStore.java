@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.elegantwalrus.papersize.paper.Paper;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +17,15 @@ public class FavoriteStore {
 
     // Database fields
     private SQLiteDatabase database;
-    private FavoriteStoreHelper dbHelper;
-    private String[] allColumns = { FavoriteStoreHelper.COLUMN_ID,
+    private final FavoriteStoreHelper dbHelper;
+    private final String[] allColumns = { FavoriteStoreHelper.COLUMN_ID,
             FavoriteStoreHelper.COLUMN_FAVORITE };
 
     public FavoriteStore(Context context) {
         dbHelper = new FavoriteStoreHelper(context);
     }
 
-    public void open() throws SQLException {
+    public void open() {
         database = dbHelper.getWritableDatabase();
     }
 

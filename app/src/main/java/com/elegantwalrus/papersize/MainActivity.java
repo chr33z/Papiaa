@@ -34,11 +34,11 @@ public class MainActivity extends ActionBarActivity {
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
 
-    List<PaperStandard> mStandards;
+    private List<PaperStandard> mStandards;
 
-    PaperStandard mCurrentStandard;
+    private PaperStandard mCurrentStandard;
 
-    MainMenuFragment mainMenuFragment;
+    private MainMenuFragment mainMenuFragment;
 
     private boolean isExpanded = false;
 

@@ -28,7 +28,7 @@ public class MainMenuFragment extends Fragment {
     @ViewById(R.id.container_left)
     LinearLayout mContainer;
 
-    private HashMap<String, TextView> mButtonMap = new HashMap<>();
+    private final HashMap<String, TextView> mButtonMap = new HashMap<>();
 
     private String activeStandard = "";
 
@@ -68,7 +68,7 @@ public class MainMenuFragment extends Fragment {
         }
     }
 
-    void openFormatsList(PaperStandard standard) {
+    private void openFormatsList(PaperStandard standard) {
         // deactivate all buttons
         for (String key : mButtonMap.keySet()) {
             boolean isStandard = key.equals(standard.getName());

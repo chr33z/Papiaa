@@ -220,7 +220,7 @@ public class PaperViewerActivity extends ActionBarActivity {
         updatePaperBleeding(bleed - 1);
     }
 
-    void togglePaperOrientation() {
+    private void togglePaperOrientation() {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
         fragment.togglePaperOrientation();
 
@@ -356,7 +356,7 @@ public class PaperViewerActivity extends ActionBarActivity {
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
      */
-    protected class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         private List<Paper> mPapers = new ArrayList<>();
 

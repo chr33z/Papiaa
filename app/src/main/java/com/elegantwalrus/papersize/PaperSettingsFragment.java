@@ -49,7 +49,7 @@ public class PaperSettingsFragment extends PreferenceFragment {
                 .unregisterOnSharedPreferenceChangeListener(prefChangedListener);
     }
 
-    SharedPreferences.OnSharedPreferenceChangeListener prefChangedListener =
+    private SharedPreferences.OnSharedPreferenceChangeListener prefChangedListener =
             new SharedPreferences.OnSharedPreferenceChangeListener() {
 
         @Override

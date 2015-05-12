@@ -50,7 +50,7 @@ public class Utils {
         bitmap.compress(Bitmap.CompressFormat.PNG, 75, stream);
         byte[] byteArray = stream.toByteArray();
 
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try {
             fos = new FileOutputStream(bitmapFile);
             fos.write(byteArray);
