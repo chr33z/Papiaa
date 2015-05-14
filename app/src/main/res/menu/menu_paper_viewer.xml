@@ -5,20 +5,23 @@
         android:id="@+id/action_paper_orientation"
         android:icon="@drawable/icon_orientation_portrait"
         android:title="@string/action_paper_orientation"
-        android:orderInCategory="1"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_favorites"
         android:title="@string/action_add_to_favorites"
         android:icon="@drawable/icon_no_favorite"
-        android:orderInCategory="2"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_share_paper"
         android:title="@string/action_share_paper"
         android:icon="@drawable/ic_menu_share_holo_dark"
-        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_paper_to_pixel"
+        android:title="@string/action_paper_to_pixel"
+        android:icon="@drawable/ic_menu_share_holo_dark"
         app:showAsAction="ifRoom"/>
 </menu>

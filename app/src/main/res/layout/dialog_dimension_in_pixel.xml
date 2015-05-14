@@ -1,0 +1,55 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_blue_grey_900"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:text="Enter the number of 'Dots per Inch' (dpi) you want to use."/>
+
+    <EditText
+        android:id="@+id/edittext1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text1"
+        android:paddingLeft="@dimen/margin_small"
+        android:paddingRight="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_xsmall"
+        android:paddingTop="@dimen/margin_xsmall"
+        android:gravity="center_horizontal"
+        android:background="@drawable/background_paper_edit"
+        android:inputType="number"
+        android:text="300"
+        android:textColor="@android:color/white"
+        android:textSize="35sp"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="="
+        android:textSize="35sp"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edittext1"
+        android:gravity="center_horizontal"
+        android:text="1024 x 1280"
+        android:textSize="40sp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/margin_medium"/>
+
+</LinearLayout>
+

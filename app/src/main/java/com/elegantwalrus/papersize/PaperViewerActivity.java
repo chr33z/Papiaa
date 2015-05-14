@@ -200,6 +200,14 @@ public class PaperViewerActivity extends ActionBarActivity {
         updateControls();
     }
 
+    @OptionsItem(R.id.action_paper_to_pixel)
+    void onPaperDimensionsInPixels() {
+        PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
+        Paper paper = fragment.getPaper();
+
+        new PixelDimensionsDialog(this, paper).show();
+    }
+
     @Click(R.id.text_increase_bleed)
     void increasePaperBleed() {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());

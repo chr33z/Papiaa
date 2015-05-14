@@ -9,8 +9,10 @@
     <string name="action_paper_orientation">Change paper orientation</string>
     <string name="action_add_to_favorites">Add to favorites</string>
     <string name="action_remove_from_favorites">Remove from favorites</string>
+    <string name="action_paper_to_pixel">Paper Dimensions in Pixels</string>
 
     <string name="format_paper_size">Paper size: %1$s &#x00D7; %2$s %3$s</string>
+    <string name="format_pixel_size">%1$s &#x00D7; %2$s</string>
 
     <string name="icon_plus" translatable="false">&#xf067;</string>
     <string name="icon_minus" translatable="false">&#xf068;</string>
@@ -44,5 +46,10 @@
     <string name="unit_millimeter">Millimeter</string>
     <string name="unit_centimeter">Centimeter</string>
     <string name="unit_inch">Inch</string>
+
+    <!-- Dialog -->
+    <string name="dialog_close">Close</string>
+
+    <string name="dialog_title_dimension_in_pixel">Paper size in Pixels</string>
 
 </resources>
