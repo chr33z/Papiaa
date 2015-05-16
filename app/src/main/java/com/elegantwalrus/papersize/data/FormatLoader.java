@@ -2,6 +2,7 @@ package com.elegantwalrus.papersize.data;
 
 import android.content.Context;
 
+import com.elegantwalrus.papersize.PaperApplication;
 import com.elegantwalrus.papersize.R;
 import com.elegantwalrus.papersize.paper.Paper;
 import com.elegantwalrus.papersize.paper.PaperStandard;
@@ -69,6 +70,8 @@ public class FormatLoader {
 
                     Paper paper = new Paper(formatName, formatDescription, formatId, width, height);
                     paper.setFavorite(isInFavorites(favorites, formatId));
+                    paper.setOrientation(((PaperApplication)context.getApplicationContext()).
+                            getApplicationOrientation());
 
                     paperStandard.addPaper(paper);
                 }

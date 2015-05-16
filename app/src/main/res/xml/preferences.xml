@@ -7,4 +7,12 @@
         android:entries="@array/pref_default_unit_entries"
         android:entryValues="@array/pref_default_unit_values"
         android:defaultValue="@integer/default_unit"/>
+
+    <ListPreference
+        android:key="orientation"
+        android:title="@string/pref_default_orientation"
+        android:dialogTitle="@string/pref_default_orientation"
+        android:entries="@array/pref_default_orientation_entries"
+        android:entryValues="@array/pref_default_orientation_values"
+        android:defaultValue="@integer/default_orientation"/>
 </PreferenceScreen>

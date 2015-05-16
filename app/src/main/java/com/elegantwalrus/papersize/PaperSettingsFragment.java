@@ -55,13 +55,6 @@ public class PaperSettingsFragment extends PreferenceFragment {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             updatePrefSummary(findPreference(key));
-
-//            if(key.equals("unit")) {
-//                int unit = Integer.parseInt(sharedPreferences.getString("unit", "0"));
-//                mPrefs.unit().put(unit);
-//
-//                Log.d("TAG", mPrefs.unit().get() + "");
-//            }
         }
     };
 

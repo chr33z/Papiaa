@@ -38,11 +38,18 @@
     <!-- Toasts -->
     <string name="toast_favorite_added">You added %1s to your favorites!</string>
     <string name="title_activity_paper_settings">Settings</string>
-    <string name="pref_default_unit">Paper Size Unit</string>
 
     <!-- Units -->
     <string name="unit_millimeter">Millimeter</string>
     <string name="unit_centimeter">Centimeter</string>
     <string name="unit_inch">Inch</string>
+
+    <!-- Orientation -->
+    <string name="orientation_portrait">Portrait</string>
+    <string name="orientation_landscape">Landscape</string>
+
+    <!-- Preferences -->
+    <string name="pref_default_unit">Paper Size Unit</string>
+    <string name="pref_default_orientation">Paper Orientationt</string>
 
 </resources>

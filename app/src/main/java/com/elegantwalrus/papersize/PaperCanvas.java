@@ -163,9 +163,26 @@ public class PaperCanvas extends View {
     }
 
     public void togglePaperOrientation() {
+//        double w1 = paper.getWidth();
+//        double h1 = paper.getHeight();
+//        paper.toggleOrientation();
+//        double w2 = paper.getWidth();
+//        double h2 = paper.getHeight();
+//
+//        double p1 = paper.getOrientation() == Orientation.PORTRAIT ? paddingLandscape : paddingPortrait;
+//        double p2 = paper.getOrientation() == Orientation.PORTRAIT ? paddingPortrait : paddingLandscape;
+//
+//        animateOrientationTransition(w1, w2, h1, h2, p1, p2);
+
+        Orientation orientation =
+                paper.getOrientation() == Orientation.PORTRAIT ? Orientation.LANDSCAPE : Orientation.PORTRAIT;
+        setOrientation(orientation);
+    }
+
+    public void setOrientation(Orientation orientation) {
         double w1 = paper.getWidth();
         double h1 = paper.getHeight();
-        paper.toggleOrientation();
+        paper.setOrientation(orientation);
         double w2 = paper.getWidth();
         double h2 = paper.getHeight();
 

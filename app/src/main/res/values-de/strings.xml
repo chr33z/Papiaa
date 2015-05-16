@@ -19,9 +19,12 @@
     <string name="about_description">Ein interaktives Nachschlagewerk für internationale Papierformate aus dem ISO 216 Standard. Jedem Papier lässt sich intuitiv ein Beschnitt hinzufügen und die finale Größe kann sofort abgelesen werden.</string>
     <string name="share_intent_chooser">Teile das Format mit:</string>
     <string name="about_acknowledgements">Danksagungen</string>
-    <string name="pref_default_unit">Papiergröße Einheiten</string>
+    <string name="pref_default_unit">Einheiten</string>
     <string name="title_activity_paper_settings">Einstellungen</string>
     <string name="unit_centimeter">Zentimeter</string>
     <string name="unit_inch">Zoll</string>
     <string name="unit_millimeter">Millimeter</string>
+    <string name="orientation_landscape">Querformat</string>
+    <string name="orientation_portrait">Hochformat</string>
+    <string name="pref_default_orientation">Format Ausrichtung</string>
 </resources>
