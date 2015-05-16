@@ -59,6 +59,33 @@
                     {"name" : "C9", "id" : "isoc-c9", "description" : "", "width" : 40, "height" : 57},
                     {"name" : "C10", "id" : "isoc-c10", "description" : "", "width" : 28, "height" : 40}
                 ]
+            },
+            {
+                "name" : "ANSI",
+                "description" : "",
+                "formats" :
+                [
+                    {"name" : "A", "id" : "ansi-a", "description" : "", "width" : 216, "height" : 279},
+                    {"name" : "B", "id" : "ansi-b", "description" : "", "width" : 279, "height" : 432},
+                    {"name" : "C", "id" : "ansi-c", "description" : "", "width" : 432, "height" : 559},
+                    {"name" : "D", "id" : "ansi-d", "description" : "", "width" : 559, "height" : 864},
+                    {"name" : "E", "id" : "ansi-e", "description" : "", "width" : 864, "height" : 1118}
+                ]
+            },
+            {
+                "name" : "ARCH",
+                "description" : "",
+                "formats" :
+                [
+                    {"name" : "A", "id" : "arch-a", "description" : "", "width" : 229, "height" : 305},
+                    {"name" : "B", "id" : "arch-b", "description" : "", "width" : 305, "height" : 457},
+                    {"name" : "C", "id" : "arch-c", "description" : "", "width" : 457, "height" : 610},
+                    {"name" : "D", "id" : "arch-d", "description" : "", "width" : 610, "height" : 914},
+                    {"name" : "E", "id" : "arch-e", "description" : "", "width" : 914, "height" : 1219},
+                    {"name" : "E1", "id" : "arch-e1", "description" : "", "width" : 762, "height" : 1067},
+                    {"name" : "E2", "id" : "arch-e2", "description" : "", "width" : 660, "height" : 965},
+                    {"name" : "E3", "id" : "arch-e3", "description" : "", "width" : 686, "height" : 991}
+                ]
             }
         ]
     }
