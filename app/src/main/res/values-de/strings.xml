@@ -16,7 +16,7 @@
     <string name="recommend_body">Hi,\n\nFalls du mal unbedingt die Größe eines Papierformats brauchst, öffne einfach "Paper Size" und sieh nach! Probier es einfach mal aus!\n\nHier ist der Link zum Play Store: %1s</string>
     <string name="label_bleeding">Beschnitt %1$s %2$s</string>
     <string name="label_add_bleeding">Beschnitt</string>
-    <string name="about_description">Ein interaktives Nachschlagewerk für internationale Papierformate aus dem ISO 216 Standard. Jedem Papier lässt sich intuitiv ein Beschnitt hinzufügen und die finale Größe kann sofort abgelesen werden.</string>
+    <string name="about_description">Ein interaktives Nachschlagewerk für internationale Papierformate. Jedem Papier lässt sich intuitiv ein Beschnitt hinzufügen und die finale Größe kann sofort abgelesen werden.</string>
     <string name="share_intent_chooser">Teile das Format mit:</string>
     <string name="about_acknowledgements">Danksagungen</string>
     <string name="pref_default_unit">Einheiten</string>
