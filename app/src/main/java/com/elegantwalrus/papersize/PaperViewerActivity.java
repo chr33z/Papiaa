@@ -73,8 +73,6 @@ public class PaperViewerActivity extends ActionBarActivity {
 
     private PaperStandard mStandard;
 
-    private DecimalFormat doubleFormat = new DecimalFormat("#.##");
-
     private double currentBleeding;
 
     private float bleedingTouchX;
@@ -83,12 +81,16 @@ public class PaperViewerActivity extends ActionBarActivity {
 
     private int maxBleeding = 10;
 
+    Unit unit = Unit.MILLIMETER;
+
     @AfterViews
     void onContent() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+
+        unit = ((PaperApplication)getApplication()).getApplicationUnit();
 
         mLabelBleeding.setOnTouchListener(bleedingTouchListener);
         mIncreaseBleed.setTypeface(font);
@@ -204,14 +206,14 @@ public class PaperViewerActivity extends ActionBarActivity {
     void increasePaperBleed() {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
         double bleed = fragment.getPaper().getBleed();
-        updatePaperBleeding(bleed + 1);
+        updatePaperBleeding(bleed + unit.getBleedStep());
     }
 
     @Click(R.id.text_decrease_bleed)
     void decreasePaperBleed() {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
         double bleed = fragment.getPaper().getBleed();
-        updatePaperBleeding(bleed - 1);
+        updatePaperBleeding(bleed - unit.getBleedStep());
     }
 
     private void togglePaperOrientation() {
@@ -241,14 +243,15 @@ public class PaperViewerActivity extends ActionBarActivity {
     }
 
     private void updatePaperBleeding(double bleed) {
-        if(bleed >= 0 && bleed <= maxBleeding) {
-            Unit unit = ((PaperApplication)getApplication()).getApplicationUnit();
+        // bring bleed to min value
+        bleed = bleed < 0 ? 0 : bleed;
 
-            if(bleed == 0) {
-                mLabelBleeding.setText(
-                        getText(R.string.label_add_bleeding));
+        if(bleed >= 0 && bleed <= maxBleeding) {
+            if(bleed <= 0) {
+                mLabelBleeding.setText(getText(R.string.label_add_bleeding));
             } else {
-                String bleedInUnit = doubleFormat.format(Unit.fromMillimeter(unit, bleed));
+                DecimalFormat df = unit == Unit.INCH ? new DecimalFormat("0.000") : new DecimalFormat("0.0");
+                String bleedInUnit = df.format(Unit.fromMillimeter(unit, bleed));
                 String formatText = getString(R.string.label_bleeding);
                 String text = String.format(Locale.getDefault(), formatText, bleedInUnit, unit.getName());
 
@@ -295,8 +298,9 @@ public class PaperViewerActivity extends ActionBarActivity {
         double width = paper.getWidth() + paper.getBleed() * 2;
         double height = paper.getHeight() + paper.getBleed() * 2;
 
-        String widthInUnit = doubleFormat.format(Unit.fromMillimeter(unit, width));
-        String heightInUnit = doubleFormat.format(Unit.fromMillimeter(unit, height));
+        DecimalFormat df = unit == Unit.INCH ? new DecimalFormat("0.00") : new DecimalFormat("0.#");
+        String widthInUnit = df.format(Math.round(Unit.fromMillimeter(unit, width) * 20) / 20.0);
+        String heightInUnit = df.format(Math.round(Unit.fromMillimeter(unit, height) * 20) / 20.0);
         mPaperSize.setText(String.format(
                 Locale.getDefault(), getString(R.string.format_paper_size), widthInUnit, heightInUnit, unit.getName()));
     }
@@ -338,7 +342,8 @@ public class PaperViewerActivity extends ActionBarActivity {
                     int maxValue = screenWidth / 2;
                     int stepSize = maxValue / maxBleeding;
 
-                    updatePaperBleeding(currentBleeding + (int) (difference / stepSize));
+                    updatePaperBleeding(currentBleeding + (int)(difference / stepSize) * unit.getBleedStep());
+
                     return true;
             }
 

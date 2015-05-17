@@ -10,7 +10,6 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -65,8 +64,6 @@ public class PaperCanvas extends View {
 
     private Unit unit = Unit.MILLIMETER;
 
-    private final DecimalFormat doubleFormat = new DecimalFormat("#.##");
-
     public PaperCanvas(Context context) {
         super(context);
 
@@ -89,7 +86,6 @@ public class PaperCanvas extends View {
         fontNormal = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Light.ttf");
         fontBold = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Semibold.ttf");
         paint.setTypeface(fontNormal);
-        Log.d("TAG", "text size" + paint.getTextSize() * 4.0f);
 
         paint.setTextSize(paint.getTextSize() * 4.0f);
         paint.setTextAlign(Paint.Align.CENTER);
@@ -137,6 +133,8 @@ public class PaperCanvas extends View {
     }
 
     public void setPaper(Paper paper) {
+        unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
+
         if (currentBleed == 0 && currentBleed < paper.getBleed()) {
             animateBleedingTransition(false);
         } else if (paper.getBleed() == 0 && currentBleed > 0) {
@@ -144,8 +142,6 @@ public class PaperCanvas extends View {
         }
         currentBleed = paper.getBleed();
         this.paper = paper;
-
-        unit = ((PaperApplication) getContext().getApplicationContext()).getApplicationUnit();
         invalidate();
     }
 
@@ -163,17 +159,6 @@ public class PaperCanvas extends View {
     }
 
     public void togglePaperOrientation() {
-//        double w1 = paper.getWidth();
-//        double h1 = paper.getHeight();
-//        paper.toggleOrientation();
-//        double w2 = paper.getWidth();
-//        double h2 = paper.getHeight();
-//
-//        double p1 = paper.getOrientation() == Orientation.PORTRAIT ? paddingLandscape : paddingPortrait;
-//        double p2 = paper.getOrientation() == Orientation.PORTRAIT ? paddingPortrait : paddingLandscape;
-//
-//        animateOrientationTransition(w1, w2, h1, h2, p1, p2);
-
         Orientation orientation =
                 paper.getOrientation() == Orientation.PORTRAIT ? Orientation.LANDSCAPE : Orientation.PORTRAIT;
         setOrientation(orientation);
@@ -288,6 +273,8 @@ public class PaperCanvas extends View {
     }
 
     private void drawBleed(Canvas canvas) {
+        DecimalFormat df = unit == Unit.INCH ? new DecimalFormat("0.00") : new DecimalFormat("0.0");
+
         paint.setColor(Color.WHITE);
         paint.setAlpha((int) (255 * animationFraction));
         paint.setStyle(Paint.Style.STROKE);
@@ -304,17 +291,20 @@ public class PaperCanvas extends View {
         paint.setAlpha((int) (255 * animationFraction));
         paint.setPathEffect(null);
 
-        // width of the paper
-        String widthText = doubleFormat.format(Unit.fromMillimeter(
-                unit, paper.getWidth() + paper.getBleed() * 2)) + " " + unit.getName();
+        // width of the paper - round to 5 cents first
+        double widthRounded = Math.round(Unit.fromMillimeter(
+                unit, paper.getWidth() + paper.getBleed() * 2) * 20) / 20.0;
+
+        String widthText = df.format(widthRounded) + " " + unit.getName();
 
         float x1 = (canvasWidth / 2.0f);
         float y1 = (float) (paddingTop + paperHeight + canvasHeight * 0.04 * animationFraction);
         canvas.drawText(widthText, x1, y1, paint);
 
         // height of the paper
-        String heightText = doubleFormat.format(Unit.fromMillimeter(
-                unit, paper.getHeight() + paper.getBleed() * 2)) + " " + unit.getName();
+        double heightRounded = Math.round(Unit.fromMillimeter(
+                unit, paper.getHeight() + paper.getBleed() * 2) * 20) / 20.0;
+        String heightText = df.format(heightRounded) + " " + unit.getName();
 
         float x2 = (float) (padding - canvasHeight * 0.04 * animationFraction);
         float y2 = paddingTop + (paperHeight / 2);
@@ -325,6 +315,8 @@ public class PaperCanvas extends View {
     }
 
     private void drawPaper(Canvas canvas) {
+        DecimalFormat df = new DecimalFormat("#.#");
+
         paint.setStyle(Paint.Style.FILL);
 
         // Draw shadow
@@ -341,14 +333,14 @@ public class PaperCanvas extends View {
         paint.setColor(Color.GRAY);
         paint.setTextSize(textSizeNumbers);
 
-        String widthText = doubleFormat.format(
+        String widthText = df.format(
                 Unit.fromMillimeter(unit, paper.getWidth())) + " " + unit.getName();
         float x1 = (canvasWidth / 2.0f);
         float y1 = (float) (paddingTop + paperHeight - bleed - canvasHeight * 0.02);
 
         canvas.drawText(widthText, x1, y1, paint);
 
-        String heightText = doubleFormat.format(
+        String heightText = df.format(
                 Unit.fromMillimeter(unit, paper.getHeight())) + " " + unit.getName();
         float x2 = (float) (padding + bleed + canvasHeight * 0.02);
         float y2 = paddingTop + (paperHeight / 2);
