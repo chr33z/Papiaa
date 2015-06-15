@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:paddingRight="@dimen/margin_medium"
     android:fadingEdge="vertical"
-    android:fadingEdgeLength="@dimen/margin_large">
+    android:fadingEdgeLength="@dimen/margin_large"
+    android:dividerHeight="0dp"
+    android:divider="@null">
 </ListView>
 

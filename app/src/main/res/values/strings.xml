@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Paper Size</string>
+    <string name="app_name">Papiaa</string>
 
     <string name="share_intent_chooser">Share your format using:</string>
 
@@ -24,15 +24,15 @@
     <string name="title_activity_about">About</string>
 
     <!-- About -->
-    <string name="about_copyright" translatable="false">Paper Size &#x00A9; %1s</string>
-    <string name="about_description">An interactive dictionary for international paper formats. Add bleed to all formats in an intuitive way and get the final paper dimensions for your projects.</string>
+    <string name="about_copyright" translatable="false">Papiaa &#x00A9; %1s</string>
+    <string name="about_description">An interactive dictionary for international paper formats. Add bleed to all formats in an intuitive way and get the final paper size for your projects.</string>
     <string name="about_version" translatable="false">Version %1s</string>
-    <string name="about_rate_app">Rate Paper Size</string>
-    <string name="about_recommend">Recommend Paper Size</string>
+    <string name="about_rate_app">Rate Papiaa</string>
+    <string name="about_recommend">Recommend Papiaa</string>
     <string name="about_acknowledgements">Acknowledgements</string>
 
     <!-- Recommend -->
-    <string name="recommend_body">Hi,\n\nif I need to know the size of a paper format I just open "Paper Size" and look it up! Just try it yourself!\n\n Here is a link to the play store: %1s</string>
+    <string name="recommend_body">Hi,\n\nif I need to know the size of a paper format I just open "Papiaa" and look it up! Just try it yourself!\n\n Here is a link to the play store: %1s</string>
     <string name="title_activity_acknowledgments">Open Source Acknowledgements</string>
 
     <!-- Toasts -->
