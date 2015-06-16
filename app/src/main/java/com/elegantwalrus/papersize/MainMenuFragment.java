@@ -66,7 +66,6 @@ public class MainMenuFragment extends Fragment {
         activeStandard = "";
 
         for (String key : mButtonMap.keySet()) {
-//            mButtonMap.get(key).animate().alpha(1.0f).start();
             animateButtonNormal(mButtonMap.get(key));
         }
     }
@@ -78,15 +77,12 @@ public class MainMenuFragment extends Fragment {
             boolean isActive = activeStandard.equals(standard.getName());
 
             if(isStandard && !isActive) {
-                //mButtonMap.get(key).animate().alpha(1.0f).start();
                 animateButtonActive(mButtonMap.get(key));
             } else if(!isStandard && isActive) {
-//                mButtonMap.get(key).animate().alpha(0.5f).start();
                 animateButtonInactive(mButtonMap.get(key));
             } else if(isStandard && isActive) {
                 // skip
             } else {
-//                mButtonMap.get(key).animate().alpha(0.5f).start();
                 animateButtonInactive(mButtonMap.get(key));
             }
         }

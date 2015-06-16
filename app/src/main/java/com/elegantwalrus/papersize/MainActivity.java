@@ -1,13 +1,16 @@
 package com.elegantwalrus.papersize;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.elegantwalrus.papersize.data.FormatLoader;
 import com.elegantwalrus.papersize.paper.Paper;
@@ -34,6 +37,9 @@ public class MainActivity extends ActionBarActivity {
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
 
+    @ViewById(R.id.header)
+    TextView mHeader;
+
     private List<PaperStandard> mStandards;
 
     private PaperStandard mCurrentStandard;
@@ -42,10 +48,17 @@ public class MainActivity extends ActionBarActivity {
 
     private boolean isExpanded = false;
 
+    private float headerTranslationX = 50;
+
     @AfterViews
     void onContent() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        headerTranslationX = size.x * 0.25f;
 
         mStandards = FormatLoader.readPaperFile(this);
         openMainMenu();
