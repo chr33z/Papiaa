@@ -46,6 +46,8 @@ import java.util.Locale;
 @OptionsMenu(R.menu.menu_paper_viewer)
 public class PaperViewerActivity extends ActionBarActivity {
 
+    private static final int ROTATION_DEGREE = 5;
+
     @Pref
     PaperPreferences_ mPrefs;
 
@@ -81,7 +83,13 @@ public class PaperViewerActivity extends ActionBarActivity {
 
     private int maxBleeding = 10;
 
-    Unit unit = Unit.MILLIMETER;
+    private Unit unit = Unit.MILLIMETER;
+
+    private static final float thresholdOffset = 0.1f;
+
+    private boolean scrollStarted;
+
+    private boolean checkDirection;
 
     @AfterViews
     void onContent() {
@@ -314,22 +322,93 @@ public class PaperViewerActivity extends ActionBarActivity {
                 Locale.getDefault(), getString(R.string.format_paper_size), widthInUnit, heightInUnit, unit.getName()));
     }
 
+    private void updatePageScaling(int position, int direction, float scale) {
+        /*
+            When swiping to left, position is the currently visible page.
+            When swiping to right, position is the page that comes into view!
+
+            When direction is +1 then scale is from 0-1, otherwise its from 1-0... D'oh!
+         */
+
+        if(direction == 0) {
+            // skip when there was not swipe (when first fragment is loaded)
+            return;
+        } else if(direction < 0) {
+            // normalize scale to 0-1
+            scale = 1 - scale;
+        }
+
+        PaperCanvasFragment paperScaleOut = mPagerAdapter.getFragment(direction > 0 ? position : position + 1);
+        PaperCanvasFragment paperScaleIn = mPagerAdapter.getFragment(direction > 0 ? position + 1 : position);
+
+        if(paperScaleIn != null && paperScaleOut != null) {
+            // The ration between two papers
+            float scalePapers = 0.3f;
+
+            /*
+                Calculate ration between two paper sizes to determine how much to scale them
+             */
+            Paper paperOut = mPagerAdapter.getFragment(direction > 0 ? position : position + 1).getPaper();
+            Paper paperIn = mPagerAdapter.getFragment(direction > 0 ? position + 1 : position).getPaper();
+            if(paperOut != null && paperIn != null) {
+                if(direction > 0) {
+                    scalePapers = (float) (1 - paperIn.getHeight() / paperOut.getHeight());
+                } else {
+                    scalePapers = (float) (1 - paperOut.getHeight() / paperIn.getHeight());
+                }
+            }
+
+            paperScaleOut.setScaling(direction > 0 ? 1 + scale * scalePapers : 1 - scale * scalePapers);
+            paperScaleOut.setAlpha(1 - scale);
+            paperScaleOut.setRotation(scale, ROTATION_DEGREE, direction);
+
+            paperScaleIn.setScaling(direction > 0 ? 1 - (1 - scale) * scalePapers : 1 + (1 - scale) * scalePapers);
+            paperScaleIn.setAlpha(scale);
+            paperScaleIn.setRotation(1 - scale, ROTATION_DEGREE, direction);
+
+            paperScaleIn.invalidate();
+            paperScaleOut.invalidate();
+        }
+    }
+
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        private int direction = 0;
+
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            updateControls();
-            updatePaperSize();
             mPrefs.lastSelectedFragment().put(position);
+
+            if (checkDirection) {
+                if (positionOffset < thresholdOffset) {
+                    direction = +1;
+                } else if(1 - position < thresholdOffset) {
+                    direction = -1;
+                }
+
+                checkDirection = false;
+            }
+
+            updatePageScaling(position, direction, positionOffset);
         }
 
         @Override
         public void onPageSelected(int position) {
-
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
+            if(state == ViewPager.SCROLL_STATE_SETTLING) {
+                updateControls();
+                updatePaperSize();
+            }
 
+            if (!scrollStarted && state == ViewPager.SCROLL_STATE_DRAGGING) {
+                scrollStarted = true;
+                checkDirection = true;
+            } else {
+                scrollStarted = false;
+            }
         }
     };
 

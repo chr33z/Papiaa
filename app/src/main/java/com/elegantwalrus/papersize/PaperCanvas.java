@@ -182,7 +182,6 @@ public class PaperCanvas extends View {
         if(paper == null) {
             return;
         }
-
         paddingTop = (canvasHeight - paperHeight) / 2;
         bleed = (int) (sizeFactor * paper.getBleed());
 

@@ -44,6 +44,21 @@ public class PaperCanvasFragment extends Fragment {
         }
     }
 
+    public void setScaling(float scaling) {
+        if(mCanvas != null) {
+            mCanvas.setScaleX(scaling);
+            mCanvas.setScaleY(scaling);
+        }
+    }
+
+    public void setAlpha(float alpha) {
+        mCanvas.setAlpha(alpha);
+    }
+
+    public void setRotation(float amount, int dregrees, int direction) {
+        mCanvas.setRotationY(amount * dregrees * direction);
+    }
+
     public void invalidate() {
         mCanvas.invalidate();
     }
