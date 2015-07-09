@@ -27,4 +27,10 @@
     <string name="orientation_landscape">Querformat</string>
     <string name="orientation_portrait">Hochformat</string>
     <string name="pref_default_orientation">Format Ausrichtung</string>
+    <string name="action_paper_to_pixel">Papiergröße in Pixeln</string>
+    <string name="dialog_close">Schließen</string>
+    <string name="dialog_format_title_dimension_in_pixel">%1$s &#x00D7; %2$s %3$s &#x2192; Pixel</string>
+    <string name="dialog_ok">Ok</string>
+    <string name="dialog_text_dimension_in_pixel">Wie viele Pixels pro Zoll (ppi) sollen für die Berechnung verwendet werden?</string>
+    <string name="dialog_title_dimension_in_pixel">Papiergröße in Pixeln</string>
 </resources>

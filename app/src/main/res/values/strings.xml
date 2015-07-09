@@ -12,7 +12,7 @@
     <string name="action_paper_to_pixel">Paper Dimensions in Pixels</string>
 
     <string name="format_paper_size">Paper size: %1$s &#x00D7; %2$s %3$s</string>
-    <string name="format_pixel_size">%1$s <font fgcolor="#36ffffff">&#x00D7;</font> %2$s <font fgcolor="#36ffffff">px</font></string>
+    <string name="format_pixel_size" translatable="false">%1$s <font fgcolor="#36ffffff">&#x00D7;</font> %2$s <font fgcolor="#36ffffff">px</font></string>
 
     <string name="icon_plus" translatable="false">&#xf067;</string>
     <string name="icon_minus" translatable="false">&#xf068;</string>
