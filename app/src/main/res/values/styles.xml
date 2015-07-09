@@ -26,6 +26,7 @@
     <style name="AppTheme.Settings" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarStyle">@style/PaperActionbar</item>
         <item name="android:textAppearanceMedium">@style/ListTextAppearanceMedium</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorSecondary">@color/gray_light</item>
     </style>
 

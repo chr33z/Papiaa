@@ -2,6 +2,7 @@ package com.elegantwalrus.papersize.data;
 
 import android.content.Context;
 
+import com.elegantwalrus.papersize.PaperApplication;
 import com.elegantwalrus.papersize.R;
 import com.elegantwalrus.papersize.paper.Paper;
 import com.elegantwalrus.papersize.paper.PaperStandard;
@@ -14,23 +15,40 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Christopher Gebhardt on 23.04.15.
  */
 public class FormatLoader {
 
+    /**
+     * Load paper formats from a json file. This method loads a german
+     * paper format file when german locale is set, otherwise it loads
+     * an international format file.
+     * This method also checks the database for favorites, and default orientation.
+     *
+     * @param context
+     * @return
+     */
     public static List<PaperStandard> readPaperFile(Context context) {
         // Get favorites from database
         FavoriteStore fs = new FavoriteStore(context);
-        List<String> favorites = new ArrayList<>();
         fs.open();
-        favorites = fs.getFavorites();
+        List<String> favorites = fs.getFavorites();
         fs.close();
+
+        int rawResource;
+        Locale locale = Locale.getDefault();
+        if(locale.equals(Locale.GERMANY) || locale.equals(Locale.GERMAN)) {
+            rawResource = R.raw.paper_formats_de;
+        } else {
+            rawResource = R.raw.paper_formats_int;
+        }
 
         List<PaperStandard> standards = new ArrayList<>();
 
-        InputStream inputStream = context.getResources().openRawResource(R.raw.paper_formats);
+        InputStream inputStream = context.getResources().openRawResource(rawResource);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         int ctr;
@@ -69,6 +87,8 @@ public class FormatLoader {
 
                     Paper paper = new Paper(formatName, formatDescription, formatId, width, height);
                     paper.setFavorite(isInFavorites(favorites, formatId));
+                    paper.setOrientation(((PaperApplication)context.getApplicationContext()).
+                            getApplicationOrientation());
 
                     paperStandard.addPaper(paper);
                 }

@@ -2,6 +2,7 @@ package com.elegantwalrus.papersize;
 
 import android.app.Application;
 
+import com.elegantwalrus.papersize.paper.Orientation;
 import com.elegantwalrus.papersize.paper.Unit;
 import com.elegantwalrus.papersize.sharedpreferences.PaperPreferences_;
 
@@ -24,5 +25,9 @@ public class PaperApplication extends Application {
 
     public Unit getApplicationUnit() {
         return Unit.values()[mPrefs.unit().get()];
+    }
+
+    public Orientation getApplicationOrientation() {
+        return Orientation.values()[mPrefs.orientation().get()];
     }
 }

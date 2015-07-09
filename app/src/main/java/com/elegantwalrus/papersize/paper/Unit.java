@@ -6,17 +6,30 @@ package com.elegantwalrus.papersize.paper;
  * Created by Christopher Gebhardt on 23.04.15.
  */
 public enum Unit {
-    MILLIMETER("mm"),
-    CENTIMETER("cm"),
-    DEZIMETER("dm"),
-    METER("m"),
-    INCH("in"),
-    FEET("ft");
+    MILLIMETER("mm", 1),
+    CENTIMETER("cm", 1),
+    DEZIMETER("dm", 1),
+    METER("m", 1),
+    INCH("in", 0.6350000),
+    FEET("ft", 0.6350000);
 
+    /**
+     * The name of this unit. Is displayed in the user interface
+     */
     private final String name;
 
-    Unit(String name) {
+    /**
+     * Size of step the bleed is changed in millimeter
+     */
+    private double bleedStep;
+
+    Unit(String name, double bleedStep) {
         this.name = name;
+        this.bleedStep = bleedStep;
+    }
+
+    public double getBleedStep() {
+        return bleedStep;
     }
 
     public String getName() {

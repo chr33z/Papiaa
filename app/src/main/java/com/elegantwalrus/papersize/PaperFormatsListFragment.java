@@ -43,8 +43,6 @@ public class PaperFormatsListFragment extends Fragment {
                     openPaperViewer(mStandard, paper);
                 }
             });
-
-            mList.setFadingEdgeLength(getResources().getDimensionPixelSize(R.dimen.margin_medium));
         }
     }
 

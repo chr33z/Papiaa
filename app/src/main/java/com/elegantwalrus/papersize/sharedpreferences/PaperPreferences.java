@@ -15,6 +15,9 @@ public interface PaperPreferences {
     @DefaultRes(R.integer.default_unit)
     int unit();
 
+    @DefaultRes(R.integer.default_unit)
+    int orientation();
+
     @DefaultInt(0)
     int lastSelectedFragment();
 }

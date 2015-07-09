@@ -1,5 +1,7 @@
 package com.elegantwalrus.papersize;
 
+import android.animation.ValueAnimator;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -38,7 +40,7 @@ public class MainMenuFragment extends Fragment {
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Semibold.ttf");
         if(data != null) {
             for (final PaperStandard standard : data) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_group_item, (ViewGroup) getView(), false);
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_item_favorite, (ViewGroup) getView(), false);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -64,7 +66,7 @@ public class MainMenuFragment extends Fragment {
         activeStandard = "";
 
         for (String key : mButtonMap.keySet()) {
-            mButtonMap.get(key).animate().alpha(1.0f).start();
+            animateButtonNormal(mButtonMap.get(key));
         }
     }
 
@@ -75,17 +77,63 @@ public class MainMenuFragment extends Fragment {
             boolean isActive = activeStandard.equals(standard.getName());
 
             if(isStandard && !isActive) {
-                mButtonMap.get(key).animate().alpha(1.0f).start();
+                animateButtonActive(mButtonMap.get(key));
             } else if(!isStandard && isActive) {
-                mButtonMap.get(key).animate().alpha(0.5f).start();
+                animateButtonInactive(mButtonMap.get(key));
             } else if(isStandard && isActive) {
                 // skip
             } else {
-                mButtonMap.get(key).animate().alpha(0.5f).start();
+                animateButtonInactive(mButtonMap.get(key));
             }
         }
 
         activeStandard = standard.getName();
         ((MainActivity) getActivity()).openFormatsList(standard);
+    }
+
+    private void animateButtonActive(View view) {
+        view.animate().alpha(1.0f).start();
+        TextView textView = (TextView)view.findViewById(R.id.text);
+        if(textView != null) {
+            animateTextColor(textView, getResources().getColor(R.color.primary));
+        }
+    }
+
+    private void animateButtonInactive(View view) {
+        view.animate().alpha(0.5f).start();
+        TextView textView = (TextView)view.findViewById(R.id.text);
+        if(textView != null) {
+            animateTextColor(textView, getResources().getColor(R.color.material_blue_grey_800));
+        }
+    }
+
+    private void animateButtonNormal(View view) {
+        view.animate().alpha(1.0f).start();
+        TextView textView = (TextView)view.findViewById(R.id.text);
+        if(textView != null) {
+            animateTextColor(textView, getResources().getColor(R.color.material_blue_grey_800));
+        }
+    }
+
+    private void animateTextColor(final TextView textView, int color) {
+        final float[] from = new float[3];
+        final float[] to = new float[3];
+        final float[] hsv  = new float[3];
+
+        Color.colorToHSV(textView.getCurrentTextColor(), from);
+        Color.colorToHSV(color, to);
+
+        ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                hsv[0] = from[0] + (to[0] - from[0])*animation.getAnimatedFraction();
+                hsv[1] = from[1] + (to[1] - from[1])*animation.getAnimatedFraction();
+                hsv[2] = from[2] + (to[2] - from[2])*animation.getAnimatedFraction();
+
+                textView.setTextColor(Color.HSVToColor(hsv));
+            }
+        });
+        anim.start();
     }
 }
