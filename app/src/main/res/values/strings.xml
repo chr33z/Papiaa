@@ -12,7 +12,7 @@
     <string name="action_paper_to_pixel">Paper Dimensions in Pixels</string>
 
     <string name="format_paper_size">Paper size: %1$s &#x00D7; %2$s %3$s</string>
-    <string name="format_pixel_size">%1$s &#x00D7; %2$s</string>
+    <string name="format_pixel_size">%1$s <font fgcolor="#36ffffff">&#x00D7;</font> %2$s <font fgcolor="#36ffffff">px</font></string>
 
     <string name="icon_plus" translatable="false">&#xf067;</string>
     <string name="icon_minus" translatable="false">&#xf068;</string>
@@ -49,7 +49,10 @@
 
     <!-- Dialog -->
     <string name="dialog_close">Close</string>
+    <string name="dialog_ok">OK</string>
 
     <string name="dialog_title_dimension_in_pixel">Paper size in Pixels</string>
+    <string name="dialog_format_title_dimension_in_pixel">%1$s &#x00D7; %2$s %3$s &#x2192; Pixels</string>
+    <string name="dialog_text_dimension_in_pixel">Enter the number of \'pixels per inch\' (ppi) you want to use.</string>
 
 </resources>

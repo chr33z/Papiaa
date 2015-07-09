@@ -74,7 +74,6 @@ public class PaperViewerActivity extends ActionBarActivity {
     private PaperStandard mStandard;
 
     private DecimalFormat doubleFormat = new DecimalFormat("#.##");
-
     private double currentBleeding;
 
     private float bleedingTouchX;
@@ -204,8 +203,9 @@ public class PaperViewerActivity extends ActionBarActivity {
     void onPaperDimensionsInPixels() {
         PaperCanvasFragment fragment = mPagerAdapter.getFragment(mPager.getCurrentItem());
         Paper paper = fragment.getPaper();
+        Unit unit = ((PaperApplication)getApplication()).getApplicationUnit();
 
-        new PixelDimensionsDialog(this, paper).show();
+        new PixelDimensionsDialog(this, paper, unit).show();
     }
 
     @Click(R.id.text_increase_bleed)

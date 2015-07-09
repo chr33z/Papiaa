@@ -12,42 +12,54 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginBottom="@dimen/margin_small"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@android:color/white"
-        android:text="Enter the number of 'Dots per Inch' (dpi) you want to use."/>
+        android:text="@string/dialog_text_dimension_in_pixel"/>
 
-    <EditText
-        android:id="@+id/edittext1"
+    <RelativeLayout
+        android:id="@+id/container_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text1"
-        android:paddingLeft="@dimen/margin_small"
-        android:paddingRight="@dimen/margin_small"
-        android:paddingBottom="@dimen/margin_xsmall"
-        android:paddingTop="@dimen/margin_xsmall"
-        android:gravity="center_horizontal"
-        android:background="@drawable/background_paper_edit"
-        android:inputType="number"
-        android:text="300"
-        android:textColor="@android:color/white"
-        android:textSize="35sp"/>
-    
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:background="@drawable/background_paper_edit">
+
+        <EditText
+            android:id="@+id/edittext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:inputType="number"
+            android:text="300"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/label_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8dp"
+            android:layout_toRightOf="@+id/edittext1"
+            android:text="ppi"
+            android:textSize="30sp"
+            android:textColor="@android:color/white"/>
+    </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="="
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textColor="@android:color/white"/>
 
     <TextView
         android:id="@+id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edittext1"
         android:gravity="center_horizontal"
         android:text="1024 x 1280"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textColor="@android:color/white"
         android:layout_marginBottom="@dimen/margin_medium"/>
 
