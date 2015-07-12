@@ -394,6 +394,7 @@ public class PaperViewerActivity extends ActionBarActivity {
 
         @Override
         public void onPageSelected(int position) {
+
         }
 
         @Override
@@ -458,6 +459,9 @@ public class PaperViewerActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             PaperCanvasFragment canvasFragment = new PaperCanvasFragment();
             canvasFragment.setPaper(mPapers.get(position));
+
+            canvasFragment.setPaperToCompareTo(mPapers.get(3));
+
             mReferenceMap.put(position, canvasFragment);
             return canvasFragment;
         }

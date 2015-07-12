@@ -16,7 +16,9 @@ public class PaperCanvasFragment extends Fragment {
 
     private Paper mPaper;
 
-    private PaperCanvas mCanvas;
+    private Paper paperToCompare;
+
+    private PaperCompareCanvas mCanvas;
 
     public PaperCanvasFragment() { }
 
@@ -25,13 +27,18 @@ public class PaperCanvasFragment extends Fragment {
         View rootView = inflater.inflate(
                 R.layout.fragment_paper_canvas, container, false);
 
-        mCanvas = (PaperCanvas) rootView.findViewById(R.id.canvas);
+        mCanvas = (PaperCompareCanvas) rootView.findViewById(R.id.canvas);
         mCanvas.setPaper(mPaper);
+        mCanvas.setPaperToCompareTo(paperToCompare);
         return rootView;
     }
 
     public void setPaper(Paper paper) {
         this.mPaper = paper;
+    }
+
+    public void setPaperToCompareTo(Paper paper) {
+        this.paperToCompare = paper;
     }
 
     public Paper getPaper() {
